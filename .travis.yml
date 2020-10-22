@@ -5,7 +5,6 @@ deploy:
   skip_cleanup: true
   script: heroku auth:token &&
           heroku container:login &&
-          heroku container:pull web --app ${HEROKU_APP} &&
           heroku container:push web --app ${HEROKU_APP} &&
           heroku container:release web --app ${HEROKU_APP}
   on:

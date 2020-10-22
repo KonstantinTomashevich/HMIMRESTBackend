@@ -1,2 +1,8 @@
 language: java
 script: mvn package
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: heroku auth:token && heroku container:login && heroku container:push web && heroku container:release web
+  on:
+    branch: master

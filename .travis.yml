@@ -1,11 +1,14 @@
 language: java
+services: docker
 script: mvn package
 deploy:
   provider: script
   skip_cleanup: true
   script: heroku auth:token &&
           heroku container:login &&
-          heroku container:push web --app ${HEROKU_APP} &&
+          docker build . -t ${HEROKU_APP} --build-arg APP_DB_USER --build-arg APP_DB_PASSWORD &&
+          docker tag ${HEROKU_APP} registry.heroku.com/${HEROKU_APP}/web &&
+          docker push registry.heroku.com/hmim-eteam-rest-backend/web &&
           heroku container:release web --app ${HEROKU_APP}
   on:
     branch: master

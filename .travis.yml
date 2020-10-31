@@ -1,7 +1,12 @@
+dist: xenial
 language: java
+jdk:
+  - openjdk8
+
 services: docker
 script:
   export DB_USER=${TEST_DB_USER} && export DB_PASSWORD=${TEST_DB_PASSWORD} && mvn package
+
 deploy:
   provider: script
   skip_cleanup: true

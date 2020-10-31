@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://ec2-107-20-104-234.compute-1.amazonaws.com:5432/d5glhhs67vgfot?sslmode=require"
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driverClassName: "org.postgresql.Driver"
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect

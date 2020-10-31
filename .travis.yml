@@ -1,6 +1,7 @@
 language: java
 services: docker
-script: mvn package
+script:
+  export DB_USER=${TEST_DB_USER} && export DB_PASSWORD=${TEST_DB_PASSWORD} && mvn package
 deploy:
   provider: script
   skip_cleanup: true

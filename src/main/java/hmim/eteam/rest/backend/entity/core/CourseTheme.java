@@ -9,7 +9,6 @@ public class CourseTheme {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")
     private Course course;
 
     private String name;

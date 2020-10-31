@@ -9,7 +9,6 @@ public class TestAnswer {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
     private TestQuestion question;
 
     private String answer;

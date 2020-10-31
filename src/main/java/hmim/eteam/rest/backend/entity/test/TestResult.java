@@ -11,11 +11,9 @@ public class TestResult {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "test_id")
     private Test test;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     private Integer totalPoints;

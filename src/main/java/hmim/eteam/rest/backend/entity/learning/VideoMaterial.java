@@ -11,7 +11,6 @@ public class VideoMaterial {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "theme_id")
     private CourseTheme theme;
 
     private String name;

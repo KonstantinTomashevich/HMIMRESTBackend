@@ -11,11 +11,9 @@ public class CreativeTaskAnswer {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "task_id")
     private CreativeTask task;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     private String answer;

@@ -11,11 +11,9 @@ public class ForumMessage {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "theme_id")
     private ForumTheme theme;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     private Long index;

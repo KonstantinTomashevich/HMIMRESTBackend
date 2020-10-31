@@ -11,15 +11,12 @@ public class TestUserAnswer {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id")
     private TestAnswer answer;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "result_id")
     private TestResult result;
 
     public TestUserAnswer() {

@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class User {
+public class SiteUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
@@ -19,11 +19,11 @@ public class User {
 
     private Boolean isGlobalAdministrator;
 
-    public User() {
+    public SiteUser() {
 
     }
 
-    public User(String visibleName, String loginMD5, String passwordMD5, Boolean isGlobalAdministrator) {
+    public SiteUser(String visibleName, String loginMD5, String passwordMD5, Boolean isGlobalAdministrator) {
         this.visibleName = visibleName;
         this.loginMD5 = loginMD5;
         this.passwordMD5 = passwordMD5;

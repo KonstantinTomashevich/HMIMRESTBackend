@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.core.User;
+import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
 
@@ -14,7 +14,7 @@ public class TestUserAnswer {
     private TestAnswer answer;
 
     @ManyToOne
-    private User user;
+    private SiteUser siteUser;
 
     @ManyToOne
     private TestResult result;
@@ -22,9 +22,9 @@ public class TestUserAnswer {
     public TestUserAnswer() {
     }
 
-    public TestUserAnswer(TestAnswer answer, User user, TestResult result) {
+    public TestUserAnswer(TestAnswer answer, SiteUser siteUser, TestResult result) {
         this.answer = answer;
-        this.user = user;
+        this.siteUser = siteUser;
         this.result = result;
     }
 
@@ -36,8 +36,8 @@ public class TestUserAnswer {
         return answer;
     }
 
-    public User getUser() {
-        return user;
+    public SiteUser getUser() {
+        return siteUser;
     }
 
     public TestResult getResult() {

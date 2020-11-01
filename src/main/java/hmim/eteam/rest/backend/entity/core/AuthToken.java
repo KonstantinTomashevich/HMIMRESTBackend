@@ -9,16 +9,16 @@ public class AuthToken {
     private String id;
 
     @ManyToOne
-    private User user;
+    private SiteUser siteUser;
 
     private Date expireDate;
 
     public AuthToken() {
     }
 
-    public AuthToken(String id, User user, Date expireDate) {
+    public AuthToken(String id, SiteUser siteUser, Date expireDate) {
         this.id = id;
-        this.user = user;
+        this.siteUser = siteUser;
         this.expireDate = expireDate;
     }
 
@@ -26,8 +26,8 @@ public class AuthToken {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public SiteUser getUser() {
+        return siteUser;
     }
 
     public Date getExpireDate() {

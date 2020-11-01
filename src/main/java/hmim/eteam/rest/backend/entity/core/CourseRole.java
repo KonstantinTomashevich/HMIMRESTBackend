@@ -9,7 +9,7 @@ public class CourseRole {
     private Long id;
 
     @ManyToOne
-    private User user;
+    private SiteUser siteUser;
 
     @ManyToOne
     private Course course;
@@ -19,8 +19,8 @@ public class CourseRole {
     public CourseRole() {
     }
 
-    public CourseRole(User user, Course course, Boolean isAdministrator) {
-        this.user = user;
+    public CourseRole(SiteUser siteUser, Course course, Boolean isAdministrator) {
+        this.siteUser = siteUser;
         this.course = course;
         this.isAdministrator = isAdministrator;
     }
@@ -29,8 +29,8 @@ public class CourseRole {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public SiteUser getUser() {
+        return siteUser;
     }
 
     public Course getCourse() {

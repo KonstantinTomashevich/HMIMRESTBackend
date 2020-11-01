@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.entity.forum;
 
-import hmim.eteam.rest.backend.entity.core.User;
+import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
 
@@ -14,7 +14,7 @@ public class ForumMessage {
     private ForumTheme theme;
 
     @ManyToOne
-    private User user;
+    private SiteUser siteUser;
 
     private Long index;
 
@@ -23,9 +23,9 @@ public class ForumMessage {
     public ForumMessage() {
     }
 
-    public ForumMessage(ForumTheme theme, User user, Long index, String text) {
+    public ForumMessage(ForumTheme theme, SiteUser siteUser, Long index, String text) {
         this.theme = theme;
-        this.user = user;
+        this.siteUser = siteUser;
         this.index = index;
         this.text = text;
     }
@@ -38,8 +38,8 @@ public class ForumMessage {
         return theme;
     }
 
-    public User getUser() {
-        return user;
+    public SiteUser getUser() {
+        return siteUser;
     }
 
     public Long getIndex() {

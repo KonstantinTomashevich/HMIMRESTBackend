@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.entity.task;
 
-import hmim.eteam.rest.backend.entity.core.User;
+import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
 
@@ -14,7 +14,7 @@ public class CreativeTaskAnswer {
     private CreativeTask task;
 
     @ManyToOne
-    private User user;
+    private SiteUser siteUser;
 
     private String answer;
 
@@ -23,9 +23,9 @@ public class CreativeTaskAnswer {
     public CreativeTaskAnswer() {
     }
 
-    public CreativeTaskAnswer(CreativeTask task, User user, String answer, Integer grade) {
+    public CreativeTaskAnswer(CreativeTask task, SiteUser siteUser, String answer, Integer grade) {
         this.task = task;
-        this.user = user;
+        this.siteUser = siteUser;
         this.answer = answer;
         this.grade = grade;
     }
@@ -38,8 +38,8 @@ public class CreativeTaskAnswer {
         return task;
     }
 
-    public User getUser() {
-        return user;
+    public SiteUser getUser() {
+        return siteUser;
     }
 
     public String getAnswer() {

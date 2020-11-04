@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class SiteUser {
@@ -11,19 +12,23 @@ public class SiteUser {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = null;
 
+    @NotNull
     private String visibleName;
 
+    @NotNull
     private String loginMD5;
 
+    @NotNull
     private String passwordMD5;
 
+    @NotNull
     private Boolean isGlobalAdministrator;
 
     public SiteUser() {
 
     }
 
-    public SiteUser(String visibleName, String loginMD5, String passwordMD5, Boolean isGlobalAdministrator) {
+    public SiteUser(String visibleName, String loginMD5, String passwordMD5, boolean isGlobalAdministrator) {
         this.visibleName = visibleName;
         this.loginMD5 = loginMD5;
         this.passwordMD5 = passwordMD5;
@@ -46,7 +51,7 @@ public class SiteUser {
         return passwordMD5;
     }
 
-    public Boolean isGlobalAdministrator() {
+    public boolean isGlobalAdministrator() {
         return isGlobalAdministrator;
     }
 }

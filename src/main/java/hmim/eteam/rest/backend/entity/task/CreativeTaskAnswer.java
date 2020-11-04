@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.task;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class CreativeTaskAnswer {
@@ -11,13 +12,17 @@ public class CreativeTaskAnswer {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private CreativeTask task;
 
     @ManyToOne
+    @NotNull
     private SiteUser siteUser;
 
+    @NotNull
     private String answer;
 
+    @NotNull
     private Integer grade;
 
     public CreativeTaskAnswer() {

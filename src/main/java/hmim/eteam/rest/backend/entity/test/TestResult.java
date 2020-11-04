@@ -3,6 +3,8 @@ package hmim.eteam.rest.backend.entity.test;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class TestResult {
@@ -11,23 +13,26 @@ public class TestResult {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Test test;
 
     @ManyToOne
+    @NotNull
     private SiteUser siteUser;
 
+    @NotNull
     private Integer totalPoints;
 
-    private Boolean finished;
+    private Date finishDate;
 
     public TestResult() {
     }
 
-    public TestResult(Test test, SiteUser siteUser, Integer totalPoints, Boolean finished) {
+    public TestResult(Test test, SiteUser siteUser, Integer totalPoints, Date finishDate) {
         this.test = test;
         this.siteUser = siteUser;
         this.totalPoints = totalPoints;
-        this.finished = finished;
+        this.finishDate = finishDate;
     }
 
     public Long getId() {
@@ -46,7 +51,7 @@ public class TestResult {
         return totalPoints;
     }
 
-    public Boolean getFinished() {
-        return finished;
+    public Date getFinishDate() {
+        return finishDate;
     }
 }

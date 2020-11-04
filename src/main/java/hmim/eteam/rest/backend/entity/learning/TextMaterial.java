@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.learning;
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class TextMaterial {
@@ -11,10 +12,13 @@ public class TextMaterial {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private CourseTheme theme;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String text;
 
     public TextMaterial() {

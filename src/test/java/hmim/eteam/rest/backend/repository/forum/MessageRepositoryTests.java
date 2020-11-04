@@ -1,9 +1,11 @@
 package hmim.eteam.rest.backend.repository.forum;
 
 import hmim.eteam.rest.backend.entity.core.Course;
+import hmim.eteam.rest.backend.entity.core.SiteUser;
 import hmim.eteam.rest.backend.entity.forum.ForumMessage;
 import hmim.eteam.rest.backend.entity.forum.ForumTheme;
 import hmim.eteam.rest.backend.repository.core.CourseRepository;
+import hmim.eteam.rest.backend.repository.core.SiteUserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,22 +27,29 @@ public class MessageRepositoryTests {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private SiteUserRepository siteUserRepository;
+
     private void clearDatabase() {
         courseRepository.deleteAll();
         themeRepository.deleteAll();
         messageRepository.deleteAll();
+        siteUserRepository.deleteAll();
     }
 
     @Test
     public void findByThemeExists() {
         clearDatabase();
+        SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
+        siteUserRepository.save(user);
+
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld");
         themeRepository.save(theme);
 
-        ForumMessage message = new ForumMessage(theme, null, 1, "HelloWorld");
+        ForumMessage message = new ForumMessage(theme, user, 1, "HelloWorld");
         messageRepository.save(message);
 
         List<ForumMessage> messages = messageRepository.findByThemeOrderByIndexAsc(theme);
@@ -52,6 +61,9 @@ public class MessageRepositoryTests {
     @Test
     public void findByThemeNotExists() {
         clearDatabase();
+        SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
+        siteUserRepository.save(user);
+
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
@@ -61,7 +73,7 @@ public class MessageRepositoryTests {
         ForumTheme otherTheme = new ForumTheme(course, "HelloWorld");
         themeRepository.save(otherTheme);
 
-        ForumMessage message = new ForumMessage(theme, null, 1, "HelloWorld");
+        ForumMessage message = new ForumMessage(theme, user, 1, "HelloWorld");
         messageRepository.save(message);
 
         List<ForumMessage> messages = messageRepository.findByThemeOrderByIndexAsc(otherTheme);
@@ -69,12 +81,10 @@ public class MessageRepositoryTests {
         Assert.assertTrue(messages.isEmpty());
     }
 
-    List<ForumMessage> generateTestMessages(ForumTheme theme) {
+    List<ForumMessage> generateTestMessages(ForumTheme theme, SiteUser user) {
         List<ForumMessage> messages = new ArrayList<>();
         for (int index = 0; index < 100; ++index) {
-            ForumMessage message = new ForumMessage(theme, null,
-                    -index, "Something");
-
+            ForumMessage message = new ForumMessage(theme, user, -index, "Something");
             messageRepository.save(message);
             messages.add(message);
         }
@@ -85,12 +95,15 @@ public class MessageRepositoryTests {
     @Test
     public void findSeveralByTheme() {
         clearDatabase();
+        SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
+        siteUserRepository.save(user);
+
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld");
         themeRepository.save(theme);
-        List<ForumMessage> messages = generateTestMessages(theme);
+        List<ForumMessage> messages = generateTestMessages(theme, user);
 
         List<ForumMessage> foundMessages = messageRepository.findByThemeOrderByIndexAsc(theme);
         Assert.assertNotNull(foundMessages);
@@ -109,12 +122,15 @@ public class MessageRepositoryTests {
     @Test
     public void findTopByTheme() {
         clearDatabase();
+        SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
+        siteUserRepository.save(user);
+
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld");
         themeRepository.save(theme);
-        List<ForumMessage> messages = generateTestMessages(theme);
+        List<ForumMessage> messages = generateTestMessages(theme, user);
 
         Optional<ForumMessage> top = messages.stream().reduce(
                 (first, second) -> first.getIndex() > second.getIndex() ? first : second);

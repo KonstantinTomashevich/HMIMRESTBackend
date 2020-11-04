@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.test;
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Test {
@@ -11,8 +12,10 @@ public class Test {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private CourseTheme theme;
 
+    @NotNull
     private String name;
 
     public Test() {

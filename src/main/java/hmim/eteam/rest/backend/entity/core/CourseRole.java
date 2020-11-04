@@ -1,6 +1,7 @@
 package hmim.eteam.rest.backend.entity.core;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class CourseRole {
@@ -9,17 +10,20 @@ public class CourseRole {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private SiteUser siteUser;
 
     @ManyToOne
+    @NotNull
     private Course course;
 
+    @NotNull
     private Boolean isAdministrator;
 
     public CourseRole() {
     }
 
-    public CourseRole(SiteUser siteUser, Course course, Boolean isAdministrator) {
+    public CourseRole(SiteUser siteUser, Course course, boolean isAdministrator) {
         this.siteUser = siteUser;
         this.course = course;
         this.isAdministrator = isAdministrator;
@@ -37,7 +41,7 @@ public class CourseRole {
         return course;
     }
 
-    public Boolean isAdministrator() {
+    public boolean isAdministrator() {
         return isAdministrator;
     }
 }

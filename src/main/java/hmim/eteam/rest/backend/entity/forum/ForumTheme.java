@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.forum;
 import hmim.eteam.rest.backend.entity.core.Course;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +13,10 @@ public class ForumTheme {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Course course;
 
+    @NotNull
     private String name;
 
     public ForumTheme() {

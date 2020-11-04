@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.forum;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,13 +13,17 @@ public class ForumMessage {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private ForumTheme theme;
 
     @ManyToOne
+    @NotNull
     private SiteUser siteUser;
 
+    @NotNull
     private Long index;
 
+    @NotNull
     private String text;
 
     public ForumMessage() {

@@ -1,16 +1,20 @@
 package hmim.eteam.rest.backend.entity.core;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 public class AuthToken {
     @Id
+    @NotNull
     private String id;
 
     @ManyToOne
+    @NotNull
     private SiteUser siteUser;
 
+    @NotNull
     private Date expireDate;
 
     public AuthToken() {

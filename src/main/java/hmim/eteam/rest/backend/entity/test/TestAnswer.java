@@ -1,6 +1,7 @@
 package hmim.eteam.rest.backend.entity.test;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class TestAnswer {
@@ -9,10 +10,13 @@ public class TestAnswer {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private TestQuestion question;
 
+    @NotNull
     private String answer;
 
+    @NotNull
     private Integer points;
 
     public TestAnswer() {

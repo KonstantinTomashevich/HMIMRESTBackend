@@ -21,13 +21,17 @@ public class VideoMaterial {
     @NotNull
     private String url;
 
+    @NotNull
+    private Long index;
+
     public VideoMaterial() {
     }
 
-    public VideoMaterial(CourseTheme theme, String name, String url) {
+    public VideoMaterial(CourseTheme theme, String name, String url, long index) {
         this.theme = theme;
         this.name = name;
         this.url = url;
+        this.index = index;
     }
 
     public Long getId() {
@@ -44,5 +48,9 @@ public class VideoMaterial {
 
     public String getUrl() {
         return url;
+    }
+
+    public long getIndex() {
+        return index;
     }
 }

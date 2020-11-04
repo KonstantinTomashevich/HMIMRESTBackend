@@ -22,7 +22,7 @@ public class TestAnswer {
     public TestAnswer() {
     }
 
-    public TestAnswer(TestQuestion question, String answer, Integer points) {
+    public TestAnswer(TestQuestion question, String answer, int points) {
         this.question = question;
         this.answer = answer;
         this.points = points;
@@ -36,7 +36,7 @@ public class TestAnswer {
         return answer;
     }
 
-    public Integer getPoints() {
+    public int getPoints() {
         return points;
     }
 }

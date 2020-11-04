@@ -18,12 +18,16 @@ public class Test {
     @NotNull
     private String name;
 
+    @NotNull
+    private Long index;
+
     public Test() {
     }
 
-    public Test(CourseTheme theme, String name) {
+    public Test(CourseTheme theme, String name, long index) {
         this.theme = theme;
         this.name = name;
+        this.index = index;
     }
 
     public Long getId() {
@@ -36,5 +40,9 @@ public class Test {
 
     public String getName() {
         return name;
+    }
+
+    public Long getIndex() {
+        return index;
     }
 }

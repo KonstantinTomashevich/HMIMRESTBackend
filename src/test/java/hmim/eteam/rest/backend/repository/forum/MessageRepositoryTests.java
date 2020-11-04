@@ -46,13 +46,13 @@ public class MessageRepositoryTests {
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
-        ForumTheme theme = new ForumTheme(course, "HelloWorld");
+        ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
 
-        ForumMessage message = new ForumMessage(theme, user, 1, "HelloWorld");
+        ForumMessage message = new ForumMessage(theme, user, new Date(), "HelloWorld");
         messageRepository.save(message);
 
-        List<ForumMessage> messages = messageRepository.findByThemeOrderByIndexAsc(theme);
+        List<ForumMessage> messages = messageRepository.findByThemeOrderByDateAsc(theme);
         Assert.assertNotNull(messages);
         Assert.assertEquals(messages.size(), 1);
         Assert.assertEquals(messages.get(0), message);
@@ -67,24 +67,26 @@ public class MessageRepositoryTests {
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
-        ForumTheme theme = new ForumTheme(course, "HelloWorld");
+        ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
 
-        ForumTheme otherTheme = new ForumTheme(course, "HelloWorld");
+        ForumTheme otherTheme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(otherTheme);
 
-        ForumMessage message = new ForumMessage(theme, user, 1, "HelloWorld");
+        ForumMessage message = new ForumMessage(theme, user, new Date(), "HelloWorld");
         messageRepository.save(message);
 
-        List<ForumMessage> messages = messageRepository.findByThemeOrderByIndexAsc(otherTheme);
+        List<ForumMessage> messages = messageRepository.findByThemeOrderByDateAsc(otherTheme);
         Assert.assertNotNull(messages);
         Assert.assertTrue(messages.isEmpty());
     }
 
     List<ForumMessage> generateTestMessages(ForumTheme theme, SiteUser user) {
         List<ForumMessage> messages = new ArrayList<>();
-        for (int index = 0; index < 100; ++index) {
-            ForumMessage message = new ForumMessage(theme, user, -index, "Something");
+        final int count = 100;
+
+        for (int index = 0; index < count; ++index) {
+            ForumMessage message = new ForumMessage(theme, user, new Date(count - index), "Something");
             messageRepository.save(message);
             messages.add(message);
         }
@@ -101,11 +103,11 @@ public class MessageRepositoryTests {
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
-        ForumTheme theme = new ForumTheme(course, "HelloWorld");
+        ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
         List<ForumMessage> messages = generateTestMessages(theme, user);
 
-        List<ForumMessage> foundMessages = messageRepository.findByThemeOrderByIndexAsc(theme);
+        List<ForumMessage> foundMessages = messageRepository.findByThemeOrderByDateAsc(theme);
         Assert.assertNotNull(foundMessages);
         Assert.assertEquals(messages.size(), foundMessages.size());
 
@@ -113,9 +115,9 @@ public class MessageRepositoryTests {
         Assert.assertTrue(messages.containsAll(foundMessages));
 
         for (int index = 1; index < foundMessages.size(); ++index) {
-            long previous = foundMessages.get(index - 1).getIndex();
-            long current = foundMessages.get(index).getIndex();
-            Assert.assertTrue(previous < current);
+            Date previous = foundMessages.get(index - 1).getDate();
+            Date current = foundMessages.get(index).getDate();
+            Assert.assertTrue(previous.before(current));
         }
     }
 
@@ -128,15 +130,15 @@ public class MessageRepositoryTests {
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
-        ForumTheme theme = new ForumTheme(course, "HelloWorld");
+        ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
         List<ForumMessage> messages = generateTestMessages(theme, user);
 
         Optional<ForumMessage> top = messages.stream().reduce(
-                (first, second) -> first.getIndex() > second.getIndex() ? first : second);
+                (first, second) -> first.getDate().after(second.getDate()) ? first : second);
         Assert.assertTrue(top.isPresent());
 
-        ForumMessage foundTop = messageRepository.findTopByThemeOrderByIndexDesc(theme);
+        ForumMessage foundTop = messageRepository.findTopByThemeOrderByDateDesc(theme);
         Assert.assertEquals(top.get(), foundTop);
     }
 }

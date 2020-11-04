@@ -4,6 +4,7 @@ import hmim.eteam.rest.backend.entity.core.Course;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -19,12 +20,16 @@ public class ForumTheme {
     @NotNull
     private String name;
 
+    @NotNull
+    private Date lastUpdateDate;
+
     public ForumTheme() {
     }
 
-    public ForumTheme(Course course, String name) {
+    public ForumTheme(Course course, String name, Date lastUpdateDate) {
         this.course = course;
         this.name = name;
+        this.lastUpdateDate = lastUpdateDate;
     }
 
     public Long getId() {
@@ -37,6 +42,10 @@ public class ForumTheme {
 
     public String getName() {
         return name;
+    }
+
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
     @Override

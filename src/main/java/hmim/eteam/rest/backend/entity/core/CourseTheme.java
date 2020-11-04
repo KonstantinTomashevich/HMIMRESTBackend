@@ -25,6 +25,7 @@ public class CourseTheme {
     public CourseTheme(Course course, String name, long index) {
         this.course = course;
         this.name = name;
+        this.index = index;
     }
 
     public Long getId() {

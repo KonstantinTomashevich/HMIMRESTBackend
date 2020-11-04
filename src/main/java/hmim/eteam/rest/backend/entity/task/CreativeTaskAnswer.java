@@ -4,6 +4,7 @@ import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class CreativeTaskAnswer {
@@ -25,14 +26,18 @@ public class CreativeTaskAnswer {
     @NotNull
     private Integer grade;
 
+    @NotNull
+    private Date date;
+
     public CreativeTaskAnswer() {
     }
 
-    public CreativeTaskAnswer(CreativeTask task, SiteUser siteUser, String answer, Integer grade) {
+    public CreativeTaskAnswer(CreativeTask task, SiteUser siteUser, String answer, Integer grade, Date date) {
         this.task = task;
         this.siteUser = siteUser;
         this.answer = answer;
         this.grade = grade;
+        this.date = date;
     }
 
     public Long getId() {
@@ -53,5 +58,9 @@ public class CreativeTaskAnswer {
 
     public Integer getGrade() {
         return grade;
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -36,7 +37,7 @@ public class ThemeRepositoryTests {
         Course course = new Course("HelloWorld");
         courseRepository.save(course);
 
-        ForumTheme theme = new ForumTheme(course, "HelloWorld");
+        ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
 
         List<ForumTheme> themes = themeRepository.findByCourse(course);
@@ -54,7 +55,7 @@ public class ThemeRepositoryTests {
         Course secondCourse = new Course("HelloWorld");
         courseRepository.save(secondCourse);
 
-        ForumTheme theme = new ForumTheme(firstCourse, "HelloWorld");
+        ForumTheme theme = new ForumTheme(firstCourse, "HelloWorld", new Date());
         themeRepository.save(theme);
 
         List<ForumTheme> themes = themeRepository.findByCourse(secondCourse);
@@ -70,7 +71,7 @@ public class ThemeRepositoryTests {
 
         List<ForumTheme> themes = new ArrayList<>();
         for (int index = 0; index < 10; index++) {
-            themes.add(new ForumTheme(course, String.valueOf(index)));
+            themes.add(new ForumTheme(course, String.valueOf(index), new Date()));
             themeRepository.save(themes.get(themes.size() - 1));
         }
 

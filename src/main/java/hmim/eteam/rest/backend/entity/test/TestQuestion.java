@@ -16,7 +16,16 @@ public class TestQuestion {
     @NotNull
     private String text;
 
+    @NotNull
+    private Long index;
+
     public TestQuestion() {
+    }
+
+    public TestQuestion(Test test, String text, long index) {
+        this.test = test;
+        this.text = text;
+        this.index = index;
     }
 
     public Long getId() {
@@ -29,5 +38,9 @@ public class TestQuestion {
 
     public String getText() {
         return text;
+    }
+
+    public long getIndex() {
+        return index;
     }
 }

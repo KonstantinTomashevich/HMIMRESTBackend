@@ -28,7 +28,7 @@ public class TestResult {
     public TestResult() {
     }
 
-    public TestResult(Test test, SiteUser siteUser, Integer totalPoints, Date finishDate) {
+    public TestResult(Test test, SiteUser siteUser, int totalPoints, Date finishDate) {
         this.test = test;
         this.siteUser = siteUser;
         this.totalPoints = totalPoints;
@@ -47,7 +47,7 @@ public class TestResult {
         return siteUser;
     }
 
-    public Integer getTotalPoints() {
+    public int getTotalPoints() {
         return totalPoints;
     }
 

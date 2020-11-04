@@ -4,6 +4,7 @@ import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -21,7 +22,7 @@ public class ForumMessage {
     private SiteUser siteUser;
 
     @NotNull
-    private Long index;
+    private Date date;
 
     @NotNull
     private String text;
@@ -29,10 +30,10 @@ public class ForumMessage {
     public ForumMessage() {
     }
 
-    public ForumMessage(ForumTheme theme, SiteUser siteUser, long index, String text) {
+    public ForumMessage(ForumTheme theme, SiteUser siteUser, Date date, String text) {
         this.theme = theme;
         this.siteUser = siteUser;
-        this.index = index;
+        this.date = date;
         this.text = text;
     }
 
@@ -48,8 +49,8 @@ public class ForumMessage {
         return siteUser;
     }
 
-    public Long getIndex() {
-        return index;
+    public Date getDate() {
+        return date;
     }
 
     public String getText() {
@@ -70,7 +71,7 @@ public class ForumMessage {
         return id.equals(that.id) &&
                 theme.equals(that.theme) &&
                 Objects.equals(siteUser, that.siteUser) &&
-                index.equals(that.index) &&
+                date.equals(that.date) &&
                 text.equals(that.text);
     }
 

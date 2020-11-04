@@ -21,13 +21,17 @@ public class CreativeTask {
     @NotNull
     private String text;
 
+    @NotNull
+    private Long index;
+
     public CreativeTask() {
     }
 
-    public CreativeTask(CourseTheme theme, String name, String text) {
+    public CreativeTask(CourseTheme theme, String name, String text, long index) {
         this.theme = theme;
         this.name = name;
         this.text = text;
+        this.index = index;
     }
 
     public Long getId() {
@@ -44,5 +48,9 @@ public class CreativeTask {
 
     public String getText() {
         return text;
+    }
+
+    public long getIndex() {
+        return index;
     }
 }

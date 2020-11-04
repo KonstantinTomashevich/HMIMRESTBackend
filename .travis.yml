@@ -5,9 +5,9 @@ jdk:
 
 services: docker
 script:
-  export DB_URL=${TEST_DB_URL} &&
-  export DB_USER=${TEST_DB_USER} &&
-  export DB_PASSWORD=${TEST_DB_PASSWORD} &&
+  export DB_URL=${APP_DB_URL} &&
+  export DB_USER=${APP_DB_USER} &&
+  export DB_PASSWORD=${APP_DB_PASSWORD} &&
   mvn package
 
 deploy:

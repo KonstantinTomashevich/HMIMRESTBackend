@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class RestAppApplication {
+public class BackendApplication {
 
     public static void main(String[] args) {
         ArrayList<String> modifiedArgs = new ArrayList<>(Arrays.asList(args));
@@ -17,6 +17,6 @@ public class RestAppApplication {
 
         String[] modifiedArgsAsArray = new String[modifiedArgs.size()];
         modifiedArgsAsArray = modifiedArgs.toArray(modifiedArgsAsArray);
-        SpringApplication.run(RestAppApplication.class, modifiedArgsAsArray);
+        SpringApplication.run(BackendApplication.class, modifiedArgsAsArray);
     }
 }

@@ -1,8 +1,9 @@
 package hmim.eteam.rest.backend.entity.forum;
 
-import hmim.eteam.rest.backend.entity.core.CourseTheme;
+import hmim.eteam.rest.backend.entity.core.Course;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class ForumTheme {
@@ -11,15 +12,15 @@ public class ForumTheme {
     private Long id;
 
     @ManyToOne
-    private CourseTheme theme;
+    private Course course;
 
     private String name;
 
     public ForumTheme() {
     }
 
-    public ForumTheme(CourseTheme theme, String name) {
-        this.theme = theme;
+    public ForumTheme(Course course, String name) {
+        this.course = course;
         this.name = name;
     }
 
@@ -27,11 +28,32 @@ public class ForumTheme {
         return id;
     }
 
-    public CourseTheme getTheme() {
-        return theme;
+    public Course getCourse() {
+        return course;
     }
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ForumTheme that = (ForumTheme) o;
+        return id.equals(that.id) &&
+                course.equals(that.course) &&
+                name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

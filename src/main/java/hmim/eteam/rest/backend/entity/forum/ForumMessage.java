@@ -3,6 +3,7 @@ package hmim.eteam.rest.backend.entity.forum;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class ForumMessage {
@@ -23,7 +24,7 @@ public class ForumMessage {
     public ForumMessage() {
     }
 
-    public ForumMessage(ForumTheme theme, SiteUser siteUser, Long index, String text) {
+    public ForumMessage(ForumTheme theme, SiteUser siteUser, long index, String text) {
         this.theme = theme;
         this.siteUser = siteUser;
         this.index = index;
@@ -48,5 +49,28 @@ public class ForumMessage {
 
     public String getText() {
         return text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        ForumMessage that = (ForumMessage) o;
+        return id.equals(that.id) &&
+                theme.equals(that.theme) &&
+                Objects.equals(siteUser, that.siteUser) &&
+                index.equals(that.index) &&
+                text.equals(that.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

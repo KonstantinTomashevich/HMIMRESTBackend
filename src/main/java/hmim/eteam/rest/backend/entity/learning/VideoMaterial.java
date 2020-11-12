@@ -1,16 +1,13 @@
 package hmim.eteam.rest.backend.entity.learning;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class VideoMaterial {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class VideoMaterial extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private CourseTheme theme;
@@ -32,10 +29,6 @@ public class VideoMaterial {
         this.name = name;
         this.url = url;
         this.index = index;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public CourseTheme getTheme() {

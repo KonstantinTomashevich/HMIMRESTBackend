@@ -1,14 +1,12 @@
 package hmim.eteam.rest.backend.entity.core;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class CourseTheme {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class CourseTheme extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private Course course;
@@ -26,10 +24,6 @@ public class CourseTheme {
         this.course = course;
         this.name = name;
         this.index = index;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Course getCourse() {

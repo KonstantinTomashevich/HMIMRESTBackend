@@ -1,5 +1,6 @@
 package hmim.eteam.rest.backend.entity.test;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
@@ -7,11 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-public class TestResult {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class TestResult extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private Test test;
@@ -33,10 +30,6 @@ public class TestResult {
         this.siteUser = siteUser;
         this.totalPoints = totalPoints;
         this.finishDate = finishDate;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Test getTest() {

@@ -1,14 +1,12 @@
 package hmim.eteam.rest.backend.entity.core;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class CourseRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class CourseRole extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private SiteUser siteUser;
@@ -27,10 +25,6 @@ public class CourseRole {
         this.siteUser = siteUser;
         this.course = course;
         this.isAdministrator = isAdministrator;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public SiteUser getUser() {

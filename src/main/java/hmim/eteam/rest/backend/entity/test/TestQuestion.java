@@ -1,14 +1,12 @@
 package hmim.eteam.rest.backend.entity.test;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class TestQuestion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class TestQuestion extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private Test test;
@@ -26,10 +24,6 @@ public class TestQuestion {
         this.test = test;
         this.text = text;
         this.index = index;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Test getTest() {

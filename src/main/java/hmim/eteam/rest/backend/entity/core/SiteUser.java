@@ -1,5 +1,7 @@
 package hmim.eteam.rest.backend.entity.core;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,11 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class SiteUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = null;
-
+public class SiteUser extends IdentifiedEntity {
     @NotNull
     private String visibleName;
 
@@ -33,10 +31,6 @@ public class SiteUser {
         this.loginMD5 = loginMD5;
         this.passwordMD5 = passwordMD5;
         this.isGlobalAdministrator = isGlobalAdministrator;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getVisibleName() {

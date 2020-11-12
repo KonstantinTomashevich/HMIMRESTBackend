@@ -1,5 +1,7 @@
 package hmim.eteam.rest.backend.entity.core;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,11 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Course {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class Course extends IdentifiedEntity {
     @NotNull
     private String name;
 
@@ -21,10 +19,6 @@ public class Course {
 
     public Course(String name) {
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

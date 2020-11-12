@@ -1,16 +1,13 @@
 package hmim.eteam.rest.backend.entity.test;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Test {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class Test extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private CourseTheme theme;
@@ -28,10 +25,6 @@ public class Test {
         this.theme = theme;
         this.name = name;
         this.index = index;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public CourseTheme getTheme() {

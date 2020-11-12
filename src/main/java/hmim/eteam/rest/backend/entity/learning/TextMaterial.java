@@ -1,16 +1,13 @@
 package hmim.eteam.rest.backend.entity.learning;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class TextMaterial {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class TextMaterial extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private CourseTheme theme;
@@ -32,10 +29,6 @@ public class TextMaterial {
         this.name = name;
         this.text = text;
         this.index = index;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public CourseTheme getTheme() {

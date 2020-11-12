@@ -1,5 +1,6 @@
 package hmim.eteam.rest.backend.entity.forum;
 
+import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
 
 import javax.persistence.*;
@@ -8,11 +9,7 @@ import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class ForumMessage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+public class ForumMessage extends IdentifiedEntity {
     @ManyToOne
     @NotNull
     private ForumTheme theme;
@@ -35,10 +32,6 @@ public class ForumMessage {
         this.siteUser = siteUser;
         this.date = date;
         this.text = text;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public ForumTheme getTheme() {
@@ -68,15 +61,10 @@ public class ForumMessage {
         }
 
         ForumMessage that = (ForumMessage) o;
-        return id.equals(that.id) &&
+        return getId().equals(that.getId()) &&
                 theme.equals(that.theme) &&
                 Objects.equals(siteUser, that.siteUser) &&
                 date.equals(that.date) &&
                 text.equals(that.text);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

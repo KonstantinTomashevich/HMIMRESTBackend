@@ -1,7 +1,7 @@
-package hmim.eteam.rest.backend.repository.core;
+package hmim.eteam.rest.backend.repository.course;
 
-import hmim.eteam.rest.backend.entity.core.CourseTheme;
-import hmim.eteam.rest.backend.entity.core.CourseThemeEntry;
+import hmim.eteam.rest.backend.entity.course.CourseTheme;
+import hmim.eteam.rest.backend.entity.course.CourseThemeEntry;
 import hmim.eteam.rest.backend.entity.learning.VideoMaterial;
 import org.springframework.data.repository.CrudRepository;
 

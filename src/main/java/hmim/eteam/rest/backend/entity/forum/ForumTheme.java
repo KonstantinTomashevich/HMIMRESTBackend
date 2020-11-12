@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.entity.forum;
 
-import hmim.eteam.rest.backend.entity.core.Course;
+import hmim.eteam.rest.backend.entity.course.Course;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;

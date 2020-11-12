@@ -1,6 +1,6 @@
-package hmim.eteam.rest.backend.repository.core;
+package hmim.eteam.rest.backend.repository.user;
 
-import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.user.SiteUser;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

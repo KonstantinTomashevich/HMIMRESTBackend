@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.repository.test;
 
-import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.test.Test;
 import hmim.eteam.rest.backend.entity.test.TestResult;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package hmim.eteam.rest.backend.entity.core;
+package hmim.eteam.rest.backend.entity.user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

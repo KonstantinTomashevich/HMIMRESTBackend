@@ -1,7 +1,7 @@
 package hmim.eteam.rest.backend.entity.task;
 
-import hmim.eteam.rest.backend.entity.core.CourseTheme;
-import hmim.eteam.rest.backend.entity.core.CourseThemeEntry;
+import hmim.eteam.rest.backend.entity.course.CourseTheme;
+import hmim.eteam.rest.backend.entity.course.CourseThemeEntry;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;

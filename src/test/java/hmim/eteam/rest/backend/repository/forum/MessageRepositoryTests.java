@@ -1,11 +1,11 @@
 package hmim.eteam.rest.backend.repository.forum;
 
-import hmim.eteam.rest.backend.entity.core.Course;
-import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.course.Course;
+import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.forum.ForumMessage;
 import hmim.eteam.rest.backend.entity.forum.ForumTheme;
-import hmim.eteam.rest.backend.repository.core.CourseRepository;
-import hmim.eteam.rest.backend.repository.core.SiteUserRepository;
+import hmim.eteam.rest.backend.repository.course.CourseRepository;
+import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

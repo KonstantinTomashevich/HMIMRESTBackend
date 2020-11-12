@@ -1,5 +1,6 @@
-package hmim.eteam.rest.backend.entity.core;
+package hmim.eteam.rest.backend.entity.user;
 
+import hmim.eteam.rest.backend.entity.course.Course;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;

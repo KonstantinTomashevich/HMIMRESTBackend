@@ -1,4 +1,4 @@
-package hmim.eteam.rest.backend.entity.core;
+package hmim.eteam.rest.backend.entity.course;
 
 import hmim.eteam.rest.backend.entity.util.OrderedEntity;
 

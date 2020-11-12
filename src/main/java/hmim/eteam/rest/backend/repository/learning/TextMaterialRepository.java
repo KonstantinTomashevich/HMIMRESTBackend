@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.repository.learning;
 
-import hmim.eteam.rest.backend.entity.core.CourseTheme;
+import hmim.eteam.rest.backend.entity.course.CourseTheme;
 import hmim.eteam.rest.backend.entity.learning.TextMaterial;
 import org.springframework.data.repository.CrudRepository;
 

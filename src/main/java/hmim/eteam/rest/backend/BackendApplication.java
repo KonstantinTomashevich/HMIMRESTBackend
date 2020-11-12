@@ -10,13 +10,6 @@ import java.util.Arrays;
 public class BackendApplication {
 
     public static void main(String[] args) {
-        ArrayList<String> modifiedArgs = new ArrayList<>(Arrays.asList(args));
-        modifiedArgs.add("-Dserver.port=" + System.getenv("PORT"));
-        modifiedArgs.add("-Dspring.datasource.username=" + System.getenv("DB_USER"));
-        modifiedArgs.add("-Dspring.datasource.password=" + System.getenv("DB_PASSWORD"));
-
-        String[] modifiedArgsAsArray = new String[modifiedArgs.size()];
-        modifiedArgsAsArray = modifiedArgs.toArray(modifiedArgsAsArray);
-        SpringApplication.run(BackendApplication.class, modifiedArgsAsArray);
+        SpringApplication.run(BackendApplication.class, args);
     }
 }

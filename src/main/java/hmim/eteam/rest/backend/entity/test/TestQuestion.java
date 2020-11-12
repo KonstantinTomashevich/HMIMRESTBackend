@@ -1,12 +1,14 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
+import hmim.eteam.rest.backend.entity.util.OrderedEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class TestQuestion extends IdentifiedEntity {
+public class TestQuestion extends OrderedEntity {
     @ManyToOne
     @NotNull
     private Test test;
@@ -14,16 +16,13 @@ public class TestQuestion extends IdentifiedEntity {
     @NotNull
     private String text;
 
-    @NotNull
-    private Long index;
-
     public TestQuestion() {
     }
 
-    public TestQuestion(Test test, String text, long index) {
+    public TestQuestion(long priority, Test test, String text) {
+        super(priority);
         this.test = test;
         this.text = text;
-        this.index = index;
     }
 
     public Test getTest() {
@@ -32,9 +31,5 @@ public class TestQuestion extends IdentifiedEntity {
 
     public String getText() {
         return text;
-    }
-
-    public long getIndex() {
-        return index;
     }
 }

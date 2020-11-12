@@ -6,14 +6,14 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class VideoMaterial extends AbstractMaterial {
+public class ImageMaterial extends AbstractMaterial {
     @NotNull
     private String url;
 
-    public VideoMaterial() {
+    public ImageMaterial() {
     }
 
-    public VideoMaterial(long priority, String name, CourseTheme theme, String url) {
+    public ImageMaterial(long priority, String name, CourseTheme theme, String url) {
         super(priority, name, theme);
         this.url = url;
     }

@@ -1,4 +1,4 @@
-package hmim.eteam.rest.backend.entity;
+package hmim.eteam.rest.backend.entity.util;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

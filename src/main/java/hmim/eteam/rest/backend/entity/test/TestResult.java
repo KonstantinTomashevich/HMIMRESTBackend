@@ -1,9 +1,10 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -18,17 +19,17 @@ public class TestResult extends IdentifiedEntity {
     private SiteUser siteUser;
 
     @NotNull
-    private Integer totalPoints;
+    private Integer score;
 
     private Date finishDate;
 
     public TestResult() {
     }
 
-    public TestResult(Test test, SiteUser siteUser, int totalPoints, Date finishDate) {
+    public TestResult(Test test, SiteUser siteUser, int score, Date finishDate) {
         this.test = test;
         this.siteUser = siteUser;
-        this.totalPoints = totalPoints;
+        this.score = score;
         this.finishDate = finishDate;
     }
 
@@ -40,8 +41,8 @@ public class TestResult extends IdentifiedEntity {
         return siteUser;
     }
 
-    public int getTotalPoints() {
-        return totalPoints;
+    public int getScore() {
+        return score;
     }
 
     public Date getFinishDate() {

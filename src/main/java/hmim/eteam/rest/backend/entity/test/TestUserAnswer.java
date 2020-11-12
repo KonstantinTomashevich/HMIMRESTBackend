@@ -1,9 +1,10 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity

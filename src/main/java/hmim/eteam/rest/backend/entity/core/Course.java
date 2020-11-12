@@ -1,11 +1,8 @@
 package hmim.eteam.rest.backend.entity.core;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity

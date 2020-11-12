@@ -1,9 +1,10 @@
 package hmim.eteam.rest.backend.entity.task;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.core.SiteUser;
+import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -15,13 +16,10 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
 
     @ManyToOne
     @NotNull
-    private SiteUser siteUser;
+    private SiteUser student;
 
     @NotNull
     private String answer;
-
-    @NotNull
-    private Integer grade;
 
     @NotNull
     private Date date;
@@ -29,11 +27,10 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
     public CreativeTaskAnswer() {
     }
 
-    public CreativeTaskAnswer(CreativeTask task, SiteUser siteUser, String answer, Integer grade, Date date) {
+    public CreativeTaskAnswer(CreativeTask task, SiteUser student, String answer, Date date) {
         this.task = task;
-        this.siteUser = siteUser;
+        this.student = student;
         this.answer = answer;
-        this.grade = grade;
         this.date = date;
     }
 
@@ -41,16 +38,12 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
         return task;
     }
 
-    public SiteUser getUser() {
-        return siteUser;
+    public SiteUser getStudent() {
+        return student;
     }
 
     public String getAnswer() {
         return answer;
-    }
-
-    public Integer getGrade() {
-        return grade;
     }
 
     public Date getDate() {

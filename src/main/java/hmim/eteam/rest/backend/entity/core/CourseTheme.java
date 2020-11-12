@@ -1,12 +1,13 @@
 package hmim.eteam.rest.backend.entity.core;
 
-import hmim.eteam.rest.backend.entity.IdentifiedEntity;
+import hmim.eteam.rest.backend.entity.util.OrderedEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class CourseTheme extends IdentifiedEntity {
+public class CourseTheme extends OrderedEntity {
     @ManyToOne
     @NotNull
     private Course course;
@@ -14,16 +15,13 @@ public class CourseTheme extends IdentifiedEntity {
     @NotNull
     private String name;
 
-    @NotNull
-    private Long index;
-
     public CourseTheme() {
     }
 
-    public CourseTheme(Course course, String name, long index) {
+    public CourseTheme(long priority, Course course, String name) {
+        super(priority);
         this.course = course;
         this.name = name;
-        this.index = index;
     }
 
     public Course getCourse() {
@@ -32,9 +30,5 @@ public class CourseTheme extends IdentifiedEntity {
 
     public String getName() {
         return name;
-    }
-
-    public long getIndex() {
-        return index;
     }
 }

@@ -1,22 +1,13 @@
 package hmim.eteam.rest.backend.entity.task;
 
 import hmim.eteam.rest.backend.entity.core.CourseTheme;
-import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
-import hmim.eteam.rest.backend.entity.util.OrderedEntity;
+import hmim.eteam.rest.backend.entity.core.CourseThemeEntry;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class CreativeTask extends OrderedEntity {
-    @ManyToOne
-    @NotNull
-    private CourseTheme theme;
-
-    @NotNull
-    private String name;
-
+public class CreativeTask extends CourseThemeEntry {
     @NotNull
     private String text;
 
@@ -24,17 +15,8 @@ public class CreativeTask extends OrderedEntity {
     }
 
     public CreativeTask(long priority, CourseTheme theme, String name, String text) {
-        this.theme = theme;
-        this.name = name;
+        super(priority, theme, name);
         this.text = text;
-    }
-
-    public CourseTheme getTheme() {
-        return theme;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getText() {

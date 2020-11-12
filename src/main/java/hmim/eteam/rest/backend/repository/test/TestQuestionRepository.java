@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TestQuestionRepository extends CrudRepository<TestQuestion, Long> {
-    List<TestQuestion> findByTestOrderByIndexAsc(Test test);
+    List<TestQuestion> findByTestOrderByPriorityAsc(Test test);
 }

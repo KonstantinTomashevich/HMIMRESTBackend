@@ -1,6 +1,5 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 import hmim.eteam.rest.backend.entity.util.OrderedEntity;
 
 import javax.persistence.Entity;

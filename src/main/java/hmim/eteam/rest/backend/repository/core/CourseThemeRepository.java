@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CourseThemeRepository extends CrudRepository<CourseTheme, Long> {
-    List<CourseTheme> findByCourseOrderByIndexAsc(Course course);
+    List<CourseTheme> findByCourseOrderByPriorityAsc(Course course);
 }

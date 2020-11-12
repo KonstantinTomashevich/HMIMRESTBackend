@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TextMaterialRepository extends CrudRepository<TextMaterial, Long> {
-    List<TextMaterial> findByThemeOrderByIndexAsc(CourseTheme theme);
+    List<TextMaterial> findByThemeOrderByPriorityAsc(CourseTheme theme);
 }

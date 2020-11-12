@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CreativeTaskAnswerRepository extends CrudRepository<CreativeTaskAnswer, Long> {
-    List<CreativeTaskAnswer> findBySiteUserAndTaskOrderByDateAsc(SiteUser siteUser, CreativeTask task);
+    List<CreativeTaskAnswer> findByStudentAndTaskOrderByDateAsc(SiteUser siteUser, CreativeTask task);
 }

@@ -7,10 +7,12 @@ public class ResultCode extends TypedResponse {
         this.code = code;
     }
 
-    public enum Codes
-    {
+    public enum Codes {
         OK,
+        INTERNAL_ERROR,
         INCORRECT_INPUT_FORMAT,
 
+        LOGIN_TAKEN,
+        LOGIN_FAILED
     }
 }

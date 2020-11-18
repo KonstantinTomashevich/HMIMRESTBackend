@@ -2,7 +2,7 @@ package hmim.eteam.rest.backend.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
-import hmim.eteam.rest.backend.common.AuthUtils;
+import hmim.eteam.rest.backend.entity.user.AuthToken;
 import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.repository.user.AuthTokenRepository;
 import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Optional;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +29,11 @@ public class AuthController {
 
     private SiteUserRepository siteUserRepository;
     private AuthTokenRepository authTokenRepository;
+
+    public AuthController(SiteUserRepository siteUserRepository, AuthTokenRepository authTokenRepository) {
+        this.siteUserRepository = siteUserRepository;
+        this.authTokenRepository = authTokenRepository;
+    }
 
     @PostMapping(folder + "register")
     @ResponseBody
@@ -53,12 +62,32 @@ public class AuthController {
         SiteUser user = siteUserRepository.save(new SiteUser(registrationData.name,
                 registrationData.login, registrationData.password, false));
 
-        return gson.toJson(AuthUtils.generateToken(user, authTokenRepository));
+        return gson.toJson(generateToken(user));
+    }
+
+    public String md5(String input) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(input.getBytes());
+        return DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
     }
 
     private void applyMD5(LoginData loginData) throws NoSuchAlgorithmException {
-        loginData.login = AuthUtils.md5(loginData.login);
-        loginData.password = AuthUtils.md5(loginData.password);
+        loginData.login = md5(loginData.login);
+        loginData.password = md5(loginData.password);
+    }
+
+    public AuthToken generateToken(SiteUser siteUser) {
+        // TODO: Cleanup expired tokens?
+        Random random = new Random();
+        String id;
+        int triesLeft = Integer.MAX_VALUE;
+
+        do {
+            id = Integer.toHexString(random.nextInt());
+            --triesLeft;
+        } while (authTokenRepository.existsById(id) || triesLeft == 0);
+
+        return authTokenRepository.save(new AuthToken(id, siteUser, new Date()));
     }
 
     @PostMapping(folder + "login")
@@ -85,7 +114,7 @@ public class AuthController {
                 loginData.login, loginData.password);
 
         if (user.isPresent()) {
-            return gson.toJson(AuthUtils.generateToken(user.get(), authTokenRepository));
+            return gson.toJson(generateToken(user.get()));
         } else {
             return gson.toJson(new ResultCode(ResultCode.Codes.LOGIN_FAILED.ordinal()));
         }

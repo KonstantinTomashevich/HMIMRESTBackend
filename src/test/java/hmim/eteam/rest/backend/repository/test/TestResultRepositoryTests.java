@@ -60,7 +60,7 @@ public class TestResultRepositoryTests {
     }
 
     @org.junit.Test
-    public void findByStudentAndTaskExists() {
+    public void findBySiteUserAndTestExists() {
         clearDatabase();
 
         Course firstCourse = new Course("CourseName");
@@ -92,7 +92,7 @@ public class TestResultRepositoryTests {
     }
 
     @org.junit.Test
-    public void findByStudentAndTaskNotExists() {
+    public void findBySiteUserAndTestNotExists() {
         clearDatabase();
 
         Course firstCourse = new Course("CourseName");
@@ -126,7 +126,7 @@ public class TestResultRepositoryTests {
     }
 
     @org.junit.Test
-    public void findSeveralByStudentAndTask() {
+    public void findSeveralBySiteUserAndTest() {
         clearDatabase();
 
         Course firstCourse = new Course("CourseName");

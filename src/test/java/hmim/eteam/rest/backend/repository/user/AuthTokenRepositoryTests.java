@@ -52,7 +52,7 @@ public class AuthTokenRepositoryTests {
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id");
         Assert.assertTrue(authToken.isPresent());
 
-        //different objects, this causes test failture
+        //different objects, this causes test failure
         Assert.assertEquals(authToken.get(),firstAuthToken);
 
     }

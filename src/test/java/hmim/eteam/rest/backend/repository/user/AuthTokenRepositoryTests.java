@@ -43,19 +43,23 @@ public class AuthTokenRepositoryTests {
 
     @Test
     public void resolveTokenExists(){
+        clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
-        AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date(new Date().getTime()+10000));
+        AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date(new Date().getTime()+1000000));
         authTokenRepository.save(firstAuthToken);
 
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id");
         Assert.assertTrue(authToken.isPresent());
+
+        //different objects, this causes test failture
         Assert.assertEquals(authToken.get(),firstAuthToken);
 
     }
 
     @Test
     public void resolveTokenExistsButExpired(){
+        clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
         AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date());
@@ -68,6 +72,7 @@ public class AuthTokenRepositoryTests {
 
     @Test
     public void resolveTokenNotExists(){
+        clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
         AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date(new Date().getTime()+10000));

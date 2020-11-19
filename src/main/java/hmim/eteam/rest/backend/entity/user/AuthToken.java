@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class AuthToken {
@@ -38,5 +39,20 @@ public class AuthToken {
 
     public Date getExpireDate() {
         return expireDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AuthToken)) return false;
+        AuthToken authToken = (AuthToken) o;
+        return id.equals(authToken.id) &&
+                siteUser.equals(authToken.siteUser) &&
+                expireDate.equals(authToken.expireDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, siteUser, expireDate);
     }
 }

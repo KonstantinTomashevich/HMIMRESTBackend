@@ -37,8 +37,7 @@ public class AuthTokenRepositoryTests {
 
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id");
         Assert.assertTrue(authToken.isPresent());
-        Assert.assertTrue(firstAuthToken.equals(authToken.get()));
-
+        Assert.assertEquals(firstAuthToken,authToken.get());
     }
 
     @Test

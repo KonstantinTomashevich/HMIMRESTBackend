@@ -13,6 +13,9 @@ public class ResultCode extends TypedResponse {
         INCORRECT_INPUT_FORMAT,
 
         LOGIN_TAKEN,
-        LOGIN_FAILED
+        LOGIN_FAILED,
+
+        NOT_EXISTING_FORUM_THEME,
+        NOT_EXISTING_COURSE,
     }
 }

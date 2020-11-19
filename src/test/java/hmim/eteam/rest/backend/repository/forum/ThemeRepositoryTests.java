@@ -39,7 +39,7 @@ public class ThemeRepositoryTests {
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
         themeRepository.save(theme);
 
-        List<ForumTheme> themes = themeRepository.findByCourse(course);
+        List<ForumTheme> themes = themeRepository.findByCourseOrderByLastUpdateDateDesc(course);
         Assert.assertNotNull(themes);
         Assert.assertEquals(themes.size(), 1);
         Assert.assertEquals(themes.get(0), theme);
@@ -57,7 +57,7 @@ public class ThemeRepositoryTests {
         ForumTheme theme = new ForumTheme(firstCourse, "HelloWorld", new Date());
         themeRepository.save(theme);
 
-        List<ForumTheme> themes = themeRepository.findByCourse(secondCourse);
+        List<ForumTheme> themes = themeRepository.findByCourseOrderByLastUpdateDateDesc(secondCourse);
         Assert.assertNotNull(themes);
         Assert.assertTrue(themes.isEmpty());
     }
@@ -74,12 +74,9 @@ public class ThemeRepositoryTests {
             themeRepository.save(themes.get(themes.size() - 1));
         }
 
-        List<ForumTheme> foundThemes = themeRepository.findByCourse(course);
+        List<ForumTheme> foundThemes = themeRepository.findByCourseOrderByLastUpdateDateDesc(course);
         Assert.assertNotNull(themes);
         Assert.assertEquals(themes.size(), foundThemes.size());
-
-        for (int index = 0; index < themes.size(); index++) {
-            Assert.assertEquals(themes.get(index), foundThemes.get(index));
-        }
+        Assert.assertTrue(themes.containsAll(foundThemes));
     }
 }

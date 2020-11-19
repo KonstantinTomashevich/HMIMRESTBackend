@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ThemeRepository extends CrudRepository<ForumTheme, Long> {
-    List<ForumTheme> findByCourse(Course course);
+    List<ForumTheme> findByCourseOrderByLastUpdateDateDesc(Course course);
 }

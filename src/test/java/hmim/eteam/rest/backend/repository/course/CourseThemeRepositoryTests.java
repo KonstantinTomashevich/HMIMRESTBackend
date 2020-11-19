@@ -2,11 +2,6 @@ package hmim.eteam.rest.backend.repository.course;
 
 import hmim.eteam.rest.backend.entity.course.Course;
 import hmim.eteam.rest.backend.entity.course.CourseTheme;
-import hmim.eteam.rest.backend.entity.user.SiteUser;
-import hmim.eteam.rest.backend.entity.forum.ForumMessage;
-import hmim.eteam.rest.backend.entity.forum.ForumTheme;
-import hmim.eteam.rest.backend.repository.course.CourseRepository;
-import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

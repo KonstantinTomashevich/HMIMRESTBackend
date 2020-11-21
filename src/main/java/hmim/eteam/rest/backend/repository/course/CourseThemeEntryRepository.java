@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CourseThemeEntryRepository<EntryType extends CourseThemeEntry>
         extends CrudRepository<EntryType, Long> {
-    List<VideoMaterial> findByThemeOrderByPriorityAsc(CourseTheme theme);
+    List<EntryType> findByThemeOrderByPriorityAsc(CourseTheme theme);
 }

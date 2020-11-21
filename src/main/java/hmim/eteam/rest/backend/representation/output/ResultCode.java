@@ -17,5 +17,6 @@ public class ResultCode extends TypedResponse {
 
         NOT_EXISTING_FORUM_THEME,
         NOT_EXISTING_COURSE,
+        NOT_EXISTING_USER,
     }
 }

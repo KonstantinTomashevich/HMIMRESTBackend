@@ -13,7 +13,5 @@ ENV DB_PASSWORD=${APP_DB_PASSWORD}
 ENV MAX_MEMORY=${ARG_MAX_MEMORY}
 
 COPY target/HMIMRestBackend-1.0.0-SNAPSHOT.jar HMIMRestBackend-1.0.0-SNAPSHOT.jar
-RUN echo "#!/bin/bash \n java -Djava.security.egd=file:/dev/./urandom -jar ./HMIMRestBackend-1.0.0-SNAPSHOT.jar -Xmx${MAX_MEMORY}m" > ./entrypoint.sh
-RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["sh", "-c", "\"java", "-Xmx${MAX_MEMORY}m", "-Djava.security.egd=file:/dev/./urandom -jar", "./HMIMRestBackend-1.0.0-SNAPSHOT.jar\""]
 EXPOSE 8080:8080

@@ -1,0 +1,784 @@
+---
+openapi: 3.0.0
+info:
+  title: SelfEducation
+  description: SelfEducation
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about SelfEducation at selfeducation.org
+  url: selfeducation.org
+servers:
+- url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://petstore.swagger.io/v2
+paths:
+  /register:
+    post:
+      summary: Register new user
+      description: The process when a user provide new
+      operationId: registration
+      requestBody:
+        $ref: '#/components/requestBodies/UserRegistrationInfo'
+      responses:
+        "200":
+          description: Successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationToken'
+        "400":
+          description: The login or password is already used
+  /me:
+    get:
+      summary: Retrieve self information
+      operationId: me
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved information about self
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SelfInfo'
+        "404":
+          description: Info about the user wasn't found
+  /login:
+    post:
+      summary: Log in account
+      description: The process when a user logs in an account
+      operationId: login
+      requestBody:
+        $ref: '#/components/requestBodies/UserLoginInfo'
+      responses:
+        "200":
+          description: Successfully logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationToken'
+        "400":
+          description: Invalid status value
+  /courses:
+    get:
+      summary: Retrieve courses information
+      description: Retrieve information about courses without fetching materials
+      operationId: courses
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+        "400":
+          description: Unexpected error occcurred
+  /course_roles:
+    get:
+      summary: Retrieve course roles (admin only)
+      description: Retrieve course roles for all participants
+      operationId: courseRoles
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Course id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved course roles
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseRole'
+        "400":
+          description: Invalid course id was provided
+        "404":
+          description: Course roles not found
+  /theme/{id}/images:
+    get:
+      summary: Retrieve images for theme
+      operationId: themeImages
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved images for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageMaterial'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Images weren't found for theme
+  /theme/{id}/videos:
+    get:
+      summary: Retrieve videos for theme
+      operationId: themeVideos
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved videos for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoMaterial'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Videos weren't found for theme
+  /theme/{id}/tasks:
+    get:
+      summary: Retrieve tasks for theme
+      operationId: themeTasks
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved tasks for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreativeTask'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Tasks weren't found for theme
+  /theme/{id}/tests:
+    get:
+      summary: Retrieve tests for theme
+      operationId: themeTests
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved tests for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Tests weren't found for theme
+  /theme/{id}/texts:
+    get:
+      summary: Retrieve texts for theme
+      operationId: themeTexts
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved texts for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TextMaterial'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Texts weren't found for theme
+  /theme/{id}/statuses:
+    get:
+      summary: Retrieve statuses for theme (admin only)
+      operationId: themeStatuses
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Theme id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved statuses for theme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ThemeStatus'
+        "400":
+          description: Invalid theme id was provided
+        "404":
+          description: Statuses weren't found for theme
+  /test/{id}/questions:
+    get:
+      summary: Retrieve test questions
+      operationId: testQuestions
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Test id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved questions by test id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestQuestion'
+  /test/{id}/answers:
+    get:
+      summary: Retrieve answers of the test for specified user
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Test id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: participant
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved answers for specific test for specific user (if nil - return all answers for all users)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestAnswer'
+  /test/{id}/results:
+    get:
+      summary: Retrieve answers of the test for specified user
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Test id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: participant
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved result(s) for specific test for specific user (if nil - return all results for all users)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestResult'
+  /task/{id}/answers:
+    get:
+      summary: Retrieve answers of the task for specified user
+      parameters:
+      - name: token
+        in: header
+        description: Authentication token
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Task id
+        required: true
+        style: simple
+        explode: true
+        schema:
+          type: string
+      - name: participant
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved result(s) for specific test for specific user (if nil - return all answers for all users)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreativeTaskAnswer'
+components:
+  schemas:
+    AuthenticationToken:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: false
+        finishDate:
+          type: string
+          format: HH:MM:SS DD.MM.YYYY
+          nullable: false
+    ForumTheme:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        lastUpdateDate:
+          type: string
+          format: HH:MM:SS DD.MM.YYYY
+        name:
+          type: string
+          nullable: false
+    Theme:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        forumThemes:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/ForumTheme'
+        themes:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/Theme'
+    CourseRole:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          default: guest
+          enum:
+          - guest
+          - student
+          - admin
+        participantId:
+          type: string
+          nullable: false
+    SelfInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        login:
+          type: string
+          nullable: false
+        isSuperAdmin:
+          type: boolean
+          nullable: false
+    UserInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        login:
+          type: string
+          nullable: false
+    UserRegistrationInfo:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: false
+        login:
+          type: string
+          nullable: false
+        password:
+          type: string
+          nullable: false
+    UserLoginInfo:
+      type: object
+      properties:
+        login:
+          type: string
+          nullable: false
+        password:
+          type: string
+          nullable: false
+    ImageMaterial:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        url:
+          type: string
+          nullable: false
+    VideoMaterial:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        url:
+          type: string
+          nullable: false
+    CreativeTask:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        text:
+          type: string
+    CreativeTaskAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        text:
+          type: string
+          nullable: true
+        participant:
+          type: string
+          description: Participant id
+          nullable: false
+        task:
+          type: string
+          description: Task id
+          nullable: false
+        evaluations:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/TeacherEvaluation'
+    TeacherEvaluation:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        comment:
+          type: string
+          nullable: true
+        value:
+          type: integer
+          format: int32
+        answer:
+          type: string
+          description: Answer id
+          nullable: false
+        teacher:
+          type: string
+          description: Teacher id
+          nullable: false
+    TestResult:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        finishDate:
+          type: string
+          format: HH:MM:SS DD.MM.YYYY
+          nullable: true
+        score:
+          minimum: 0
+          type: integer
+          format: int64
+          default: 0
+        participant:
+          type: string
+          description: Participant id
+          nullable: false
+        test:
+          type: string
+          description: Test id
+          nullable: false
+        answers:
+          type: array
+          nullable: false
+          items:
+            $ref: '#/components/schemas/TestAnswer'
+    Test:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+    TestQuestion:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        text:
+          type: string
+          nullable: false
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+    TestAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        score:
+          type: integer
+          format: int16
+          nullable: false
+        participant:
+          type: string
+          description: Participant id
+          nullable: false
+    TextMaterial:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        name:
+          type: string
+        priority:
+          type: integer
+          format: int32
+          nullable: false
+        text:
+          type: string
+    ThemeStatus:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+        wasSeen:
+          type: string
+          nullable: false
+        participant:
+          type: string
+          description: User id
+          nullable: false
+  requestBodies:
+    UserRegistrationInfo:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRegistrationInfo'
+    UserLoginInfo:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserLoginInfo'
+    AuthenticationToken:
+      description: Authentication token that needs for future requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthenticationToken'
+      required: true

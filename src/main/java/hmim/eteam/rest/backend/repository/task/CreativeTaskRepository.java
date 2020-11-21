@@ -1,7 +1,11 @@
 package hmim.eteam.rest.backend.repository.task;
 
+import hmim.eteam.rest.backend.entity.course.CourseTheme;
 import hmim.eteam.rest.backend.entity.task.CreativeTask;
-import hmim.eteam.rest.backend.repository.course.CourseThemeEntryRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface CreativeTaskRepository extends CourseThemeEntryRepository<CreativeTask> {
+import java.util.List;
+
+public interface CreativeTaskRepository extends CrudRepository<CreativeTask, Long> {
+    List<CreativeTask> findByThemeOrderByPriorityAsc(CourseTheme theme);
 }

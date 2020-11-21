@@ -12,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -27,7 +26,7 @@ public class CourseRoleRepositoryTests {
     @Autowired
     private CourseRoleRepository courseRoleRepository;
 
-    public void clearDatabase(){
+    public void clearDatabase() {
         siteUserRepository.deleteAll();
         courseRepository.deleteAll();
         courseRoleRepository.deleteAll();
@@ -43,14 +42,14 @@ public class CourseRoleRepositoryTests {
         Course firstCourse = new Course("CourseName");
         courseRepository.save(firstCourse);
 
-        CourseRole firstCourseRole = new CourseRole(firstUser,firstCourse, UserRole.Student);
+        CourseRole firstCourseRole = new CourseRole(firstUser, firstCourse, UserRole.Student);
         courseRoleRepository.save(firstCourseRole);
 
-        List<CourseRole> courseRoles = courseRoleRepository.findBySiteUserAndCourse(firstUser,firstCourse);
+        Optional<CourseRole> courseRole = courseRoleRepository.findTopBySiteUserAndCourse(firstUser, firstCourse);
 
-        Assert.assertNotNull(courseRoles);
-        Assert.assertEquals(courseRoles.size(),1);
-        Assert.assertEquals(courseRoles.get(0),firstCourseRole);
+        Assert.assertNotNull(courseRole);
+        Assert.assertTrue(courseRole.isPresent());
+        Assert.assertEquals(courseRole.get(), firstCourseRole);
     }
 
     @Test
@@ -66,37 +65,12 @@ public class CourseRoleRepositoryTests {
         Course firstCourse = new Course("CourseName");
         courseRepository.save(firstCourse);
 
-        CourseRole firstCourseRole = new CourseRole(firstUser,firstCourse, UserRole.Student);
+        CourseRole firstCourseRole = new CourseRole(firstUser, firstCourse, UserRole.Student);
         courseRoleRepository.save(firstCourseRole);
 
-        List<CourseRole> courseRoles = courseRoleRepository.findBySiteUserAndCourse(secondUser,firstCourse);
+        Optional<CourseRole> courseRole = courseRoleRepository.findTopBySiteUserAndCourse(secondUser, firstCourse);
 
-        Assert.assertNotNull(courseRoles);
-        Assert.assertTrue(courseRoles.isEmpty());
-    }
-
-    @Test
-    public void findBySiteUserAndCourse() {
-        clearDatabase();
-
-        SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
-        siteUserRepository.save(firstUser);
-
-        Course firstCourse = new Course("CourseName");
-        courseRepository.save(firstCourse);
-
-        List<CourseRole> courseRoles = new ArrayList<CourseRole>();
-        for(int i =0;i<10;i++) {
-            courseRoles.add(new CourseRole(firstUser,firstCourse, UserRole.Student));
-            courseRoleRepository.save(courseRoles.get(courseRoles.size()-1));
-        }
-
-        List<CourseRole> foundedCourseRoles = courseRoleRepository.findBySiteUserAndCourse(firstUser,firstCourse);
-
-        Assert.assertNotNull(foundedCourseRoles);
-        Assert.assertEquals(foundedCourseRoles.size(),courseRoles.size());
-        Assert.assertTrue(foundedCourseRoles.containsAll(courseRoles));
-        Assert.assertTrue(courseRoles.containsAll(foundedCourseRoles));
-
+        Assert.assertNotNull(courseRole);
+        Assert.assertFalse(courseRole.isPresent());
     }
 }

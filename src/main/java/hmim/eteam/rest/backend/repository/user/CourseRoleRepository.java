@@ -5,8 +5,8 @@ import hmim.eteam.rest.backend.entity.user.CourseRole;
 import hmim.eteam.rest.backend.entity.user.SiteUser;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface CourseRoleRepository extends CrudRepository<CourseRole, Long> {
-    List<CourseRole> findBySiteUserAndCourse(SiteUser siteUser, Course course);
+    Optional<CourseRole> findTopBySiteUserAndCourse(SiteUser siteUser, Course course);
 }

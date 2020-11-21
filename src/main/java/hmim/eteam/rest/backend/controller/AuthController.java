@@ -1,18 +1,14 @@
 package hmim.eteam.rest.backend.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
 import hmim.eteam.rest.backend.entity.user.AuthToken;
 import hmim.eteam.rest.backend.entity.user.SiteUser;
+import hmim.eteam.rest.backend.model.AuthenticationToken;
+import hmim.eteam.rest.backend.model.UserLoginInfo;
+import hmim.eteam.rest.backend.model.UserRegistrationInfo;
 import hmim.eteam.rest.backend.repository.user.AuthTokenRepository;
 import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
-import hmim.eteam.rest.backend.representation.input.LoginData;
-import hmim.eteam.rest.backend.representation.input.RegistrationData;
-import hmim.eteam.rest.backend.representation.output.ResultCode;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
@@ -23,57 +19,37 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@RestController
 public class AuthController {
-    private static final String folder = "/auth/";
-
-    private SiteUserRepository siteUserRepository;
-    private AuthTokenRepository authTokenRepository;
+    private final SiteUserRepository siteUserRepository;
+    private final AuthTokenRepository authTokenRepository;
 
     public AuthController(SiteUserRepository siteUserRepository, AuthTokenRepository authTokenRepository) {
         this.siteUserRepository = siteUserRepository;
         this.authTokenRepository = authTokenRepository;
     }
 
-    @PostMapping(folder + "register")
-    @ResponseBody
-    public String register(@RequestBody String dataJson) {
-        Gson gson = new Gson();
-        RegistrationData registrationData;
-
+    public ResponseEntity<AuthenticationToken> register(UserRegistrationInfo registration) {
         try {
-            registrationData = gson.fromJson(dataJson, RegistrationData.class);
-        } catch (JsonIOException exception) {
-            Logger.getLogger(getClass().getName()).log(Level.WARNING, exception.getMessage());
-            return gson.toJson(new ResultCode(ResultCode.Codes.INCORRECT_INPUT_FORMAT.ordinal()));
-        }
-
-        try {
-            applyMD5(registrationData);
+            registration.login(md5(registration.getLogin())).password(md5(registration.getPassword()));
         } catch (NoSuchAlgorithmException exception) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, exception.getMessage());
-            return gson.toJson(new ResultCode(ResultCode.Codes.INTERNAL_ERROR.ordinal()));
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        if (siteUserRepository.existsByLoginMD5(registrationData.login)) {
-            return gson.toJson(new ResultCode(ResultCode.Codes.LOGIN_TAKEN.ordinal()));
+        if (siteUserRepository.existsByLoginMD5(registration.getLogin())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        SiteUser user = siteUserRepository.save(new SiteUser(registrationData.name,
-                registrationData.login, registrationData.password, false));
+        SiteUser user = siteUserRepository.save(new SiteUser(registration.getName(),
+                registration.getLogin(), registration.getPassword(), false));
 
-        return gson.toJson(generateToken(user));
+        return new ResponseEntity<>(new AuthenticationToken().value(generateToken(user).getId()), HttpStatus.OK);
     }
 
     public String md5(String input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(input.getBytes());
         return DatatypeConverter.printHexBinary(md.digest()).toUpperCase();
-    }
-
-    private void applyMD5(LoginData loginData) throws NoSuchAlgorithmException {
-        loginData.login = md5(loginData.login);
-        loginData.password = md5(loginData.password);
     }
 
     public AuthToken generateToken(SiteUser siteUser) {
@@ -90,33 +66,19 @@ public class AuthController {
         return authTokenRepository.save(new AuthToken(id, siteUser, new Date()));
     }
 
-    @PostMapping(folder + "login")
-    @ResponseBody
-    public String login(@RequestBody String dataJson) {
-        Gson gson = new Gson();
-        LoginData loginData;
-
+    public ResponseEntity<AuthenticationToken> login(UserLoginInfo input) {
         try {
-            loginData = gson.fromJson(dataJson, LoginData.class);
-        } catch (JsonIOException exception) {
-            Logger.getLogger(getClass().getName()).log(Level.WARNING, exception.getMessage());
-            return gson.toJson(new ResultCode(ResultCode.Codes.INCORRECT_INPUT_FORMAT.ordinal()));
-        }
-
-        try {
-            applyMD5(loginData);
+            input.login(md5(input.getLogin())).password(md5(input.getPassword()));
         } catch (NoSuchAlgorithmException exception) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, exception.getMessage());
-            return gson.toJson(new ResultCode(ResultCode.Codes.INTERNAL_ERROR.ordinal()));
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         Optional<SiteUser> user = siteUserRepository.findFirstByLoginMD5AndPasswordMD5(
-                loginData.login, loginData.password);
+                input.getLogin(), input.getPassword());
 
-        if (user.isPresent()) {
-            return gson.toJson(generateToken(user.get()));
-        } else {
-            return gson.toJson(new ResultCode(ResultCode.Codes.LOGIN_FAILED.ordinal()));
-        }
+        return user.map(siteUser -> new ResponseEntity<>(
+                new AuthenticationToken().value(generateToken(siteUser).getId()), HttpStatus.OK)).orElseGet(
+                () -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }

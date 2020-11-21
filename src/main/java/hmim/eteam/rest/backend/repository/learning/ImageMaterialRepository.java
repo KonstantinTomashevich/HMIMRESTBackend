@@ -1,7 +1,11 @@
 package hmim.eteam.rest.backend.repository.learning;
 
+import hmim.eteam.rest.backend.entity.course.CourseTheme;
 import hmim.eteam.rest.backend.entity.learning.ImageMaterial;
-import hmim.eteam.rest.backend.repository.course.CourseThemeEntryRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface ImageMaterialRepository extends CourseThemeEntryRepository<ImageMaterial> {
+import java.util.List;
+
+public interface ImageMaterialRepository extends CrudRepository<ImageMaterial, Long> {
+    List<ImageMaterial> findByThemeOrderByPriorityAsc(CourseTheme theme);
 }

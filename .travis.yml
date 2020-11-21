@@ -15,7 +15,7 @@ deploy:
   edge: true
   script: heroku auth:token &&
     heroku container:login &&
-    docker build . -t ${HEROKU_APP} --build-arg APP_DB_URL --build-arg APP_DB_USER --build-arg APP_DB_PASSWORD &&
+    docker build . -t ${HEROKU_APP} --build-arg APP_DB_URL --build-arg APP_DB_USER --build-arg APP_DB_PASSWORD --build-arg APP_MAX_MEMORY &&
     docker tag ${HEROKU_APP} registry.heroku.com/${HEROKU_APP}/web &&
     docker push registry.heroku.com/hmim-eteam-rest-backend/web &&
     heroku container:release web --app ${HEROKU_APP}

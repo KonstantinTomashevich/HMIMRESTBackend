@@ -31,7 +31,7 @@ public class CourseThemeRepositoryTests {
     public void findByCourseExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -47,10 +47,10 @@ public class CourseThemeRepositoryTests {
     public void findByCourseNotExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
-        Course secondCourse = new Course("CourseName");
+        Course secondCourse = new Course(0, "CourseName");
         courseRepository.save(secondCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -65,10 +65,10 @@ public class CourseThemeRepositoryTests {
     public void findSeveralByCourse(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
-        List<CourseTheme> courseThemes = new ArrayList<CourseTheme>();
+        List<CourseTheme> courseThemes = new ArrayList<>();
         for(int i = 0; i<10; i++) {
             courseThemes.add(new CourseTheme(9-i, firstCourse, "CourseTheme"));
             courseThemeRepository.save(courseThemes.get(courseThemes.size() - 1));

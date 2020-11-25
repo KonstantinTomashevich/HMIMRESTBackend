@@ -33,7 +33,7 @@ public class ThemeRepositoryTests {
     @Test
     public void findByCourseExists() {
         clearDatabase();
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
@@ -48,10 +48,10 @@ public class ThemeRepositoryTests {
     @Test
     public void findByCourseNotExists() {
         clearDatabase();
-        Course firstCourse = new Course("HelloWorld");
+        Course firstCourse = new Course(0, "HelloWorld");
         courseRepository.save(firstCourse);
 
-        Course secondCourse = new Course("HelloWorld");
+        Course secondCourse = new Course(0, "HelloWorld");
         courseRepository.save(secondCourse);
 
         ForumTheme theme = new ForumTheme(firstCourse, "HelloWorld", new Date());
@@ -65,7 +65,7 @@ public class ThemeRepositoryTests {
     @Test
     public void findSeveralByCourseExists() {
         clearDatabase();
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         List<ForumTheme> themes = new ArrayList<>();

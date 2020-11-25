@@ -1,5 +1,6 @@
 package hmim.eteam.rest.backend.entity.forum;
 
+import hmim.eteam.rest.backend.RFC3339DateFormat;
 import hmim.eteam.rest.backend.entity.course.Course;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
@@ -55,5 +56,12 @@ public class ForumTheme extends IdentifiedEntity {
         return getId().equals(that.getId()) &&
                 course.equals(that.course) &&
                 name.equals(that.name);
+    }
+
+    public hmim.eteam.rest.backend.model.ForumTheme toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.ForumTheme().
+                id(getId().toString()).
+                lastUpdateDate(new RFC3339DateFormat().format(lastUpdateDate)).
+                name(name);
     }
 }

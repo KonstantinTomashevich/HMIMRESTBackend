@@ -38,7 +38,7 @@ public class VideoMaterialRepositoryTests {
     public void findByThemeExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -58,7 +58,7 @@ public class VideoMaterialRepositoryTests {
     public void findByThemeNotExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -80,13 +80,13 @@ public class VideoMaterialRepositoryTests {
     public void findSeveralByTheme(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
         courseThemeRepository.save(firstCourseTheme);
 
-        List<VideoMaterial> videoMaterials = new ArrayList<VideoMaterial>();
+        List<VideoMaterial> videoMaterials = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             videoMaterials.add(new VideoMaterial(9-i, firstCourseTheme, "Name", "Url"));
             videoMaterialRepository.save(videoMaterials.get(videoMaterials.size()-1));

@@ -61,7 +61,7 @@ public class TestUserAnswerRepositoryTests {
     public void findBySiteUserAndResultExists() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -98,7 +98,7 @@ public class TestUserAnswerRepositoryTests {
     public void findBySiteUserAndResultNotExists() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -136,7 +136,7 @@ public class TestUserAnswerRepositoryTests {
     public void findSeveralBySiteUserAndResult() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -157,7 +157,7 @@ public class TestUserAnswerRepositoryTests {
         TestResult firstResult = new TestResult(firstTest,firstUser,10,new Date());
         testResultRepository.save(firstResult);
 
-        List<TestUserAnswer> testUserAnswers = new ArrayList<TestUserAnswer>();
+        List<TestUserAnswer> testUserAnswers = new ArrayList<>();
         for(int i = 0;i<10;i++){
             testUserAnswers.add(new TestUserAnswer(firstAnswer,firstUser,firstResult));
             testUserAnswerRepository.save(testUserAnswers.get(testUserAnswers.size()-1));

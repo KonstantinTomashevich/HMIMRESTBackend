@@ -1,9 +1,8 @@
 package hmim.eteam.rest.backend.api;
 
 import hmim.eteam.rest.backend.controller.AuthController;
-import hmim.eteam.rest.backend.model.AuthenticationToken;
-import hmim.eteam.rest.backend.model.UserLoginInfo;
-import hmim.eteam.rest.backend.model.UserRegistrationInfo;
+import hmim.eteam.rest.backend.controller.CourseController;
+import hmim.eteam.rest.backend.model.*;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
 import hmim.eteam.rest.backend.repository.forum.MessageRepository;
@@ -21,10 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Controller
 public class Router implements DefaultApi {
     private final AuthController authController;
+    private final CourseController courseController;
 
     public Router(CourseRepository courseRepository, CourseThemeRepository courseThemeRepository,
                   MessageRepository forumMessageRepository, ThemeRepository forumThemeRepository,
@@ -37,7 +39,19 @@ public class Router implements DefaultApi {
                   TestUserAnswerRepository testUserAnswerRepository, AuthTokenRepository authTokenRepository,
                   CourseRoleRepository courseRoleRepository, SiteUserRepository siteUserRepository) {
 
+        IRoleResolver roleResolver = new RoleResolver(authTokenRepository, courseRepository, courseRoleRepository);
         authController = new AuthController(siteUserRepository, authTokenRepository);
+        courseController = new CourseController(roleResolver, courseRepository, courseRoleRepository);
+    }
+
+    @Override
+    public ResponseEntity<CourseRole> courseRoles(String token, @NotNull @Valid String id) {
+        return courseController.courseRoles(token, id);
+    }
+
+    @Override
+    public ResponseEntity<List<Course>> courses(String token) {
+        return courseController.courses(token);
     }
 
     @Override

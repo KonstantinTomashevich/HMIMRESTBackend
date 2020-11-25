@@ -43,7 +43,7 @@ public class TestQuestionRepositoryTests {
     public void findByTestExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -66,7 +66,7 @@ public class TestQuestionRepositoryTests {
     public void findByTestNotExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -92,7 +92,7 @@ public class TestQuestionRepositoryTests {
     public void findSeveralByTest(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -102,7 +102,7 @@ public class TestQuestionRepositoryTests {
         testRepository.save(firstTest);
 
 
-        List<TestQuestion> testQuestions = new ArrayList<TestQuestion>();
+        List<TestQuestion> testQuestions = new ArrayList<>();
         for(int i=0;i<10;i++) {
             testQuestions.add(new TestQuestion(9-i,firstTest,"Text"));
             testQuestionRepository.save(testQuestions.get(testQuestions.size()-1));

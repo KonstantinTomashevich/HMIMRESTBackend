@@ -12,7 +12,7 @@ import org.springframework.lang.Nullable;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
-public class RoleResolver {
+class RoleResolver implements IRoleResolver {
     private final AuthTokenRepository authTokenRepository;
     private final CourseRepository courseRepository;
     private final CourseRoleRepository courseRoleRepository;
@@ -24,6 +24,7 @@ public class RoleResolver {
         this.courseRoleRepository = courseRoleRepository;
     }
 
+    @Override
     public UserRole resolve(@NotNull String authTokenId, @Nullable Long courseId) {
         Optional<AuthToken> authToken = authTokenRepository.resolveToken(authTokenId);
         if (!authToken.isPresent()) {

@@ -60,51 +60,51 @@ public class TestResultRepositoryTests {
     public void findBySiteUserAndTestExists() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
         courseThemeRepository.save(firstCourseTheme);
 
-        Test firstTest = new Test(1,firstCourseTheme,"Name");
+        Test firstTest = new Test(1, firstCourseTheme, "Name");
         testRepository.save(firstTest);
 
-        TestQuestion firstQuestion = new TestQuestion(1,firstTest,"Text");
+        TestQuestion firstQuestion = new TestQuestion(1, firstTest, "Text");
         testQuestionRepository.save(firstQuestion);
 
-        TestAnswer firstAnswer = new TestAnswer(1,firstQuestion,"Answer",10);
+        TestAnswer firstAnswer = new TestAnswer(1, firstQuestion, "Answer", 10);
         testAnswerRepository.save(firstAnswer);
 
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
 
-        TestResult testResult = new TestResult(firstTest,firstUser,10,new Date());
+        TestResult testResult = new TestResult(firstTest, firstUser, 10, new Date());
         testResultRepository.save(testResult);
 
-        List<TestResult> testResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(firstUser,firstTest);
+        List<TestResult> testResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(firstUser, firstTest);
 
         Assert.assertNotNull(testResults);
-        Assert.assertEquals(testResults.size(),1);
-        Assert.assertEquals(testResult,testResults.get(0));
+        Assert.assertEquals(testResults.size(), 1);
+        Assert.assertEquals(testResult, testResults.get(0));
     }
 
     @org.junit.Test
     public void findBySiteUserAndTestNotExists() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
         courseThemeRepository.save(firstCourseTheme);
 
-        Test firstTest = new Test(1,firstCourseTheme,"Name");
+        Test firstTest = new Test(1, firstCourseTheme, "Name");
         testRepository.save(firstTest);
 
-        TestQuestion firstQuestion = new TestQuestion(1,firstTest,"Text");
+        TestQuestion firstQuestion = new TestQuestion(1, firstTest, "Text");
         testQuestionRepository.save(firstQuestion);
 
-        TestAnswer firstAnswer = new TestAnswer(1,firstQuestion,"Answer",10);
+        TestAnswer firstAnswer = new TestAnswer(1, firstQuestion, "Answer", 10);
         testAnswerRepository.save(firstAnswer);
 
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
@@ -113,10 +113,10 @@ public class TestResultRepositoryTests {
         SiteUser secondUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(secondUser);
 
-        TestResult testResult = new TestResult(firstTest,firstUser,10,new Date());
+        TestResult testResult = new TestResult(firstTest, firstUser, 10, new Date());
         testResultRepository.save(testResult);
 
-        List<TestResult> testResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(secondUser,firstTest);
+        List<TestResult> testResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(secondUser, firstTest);
 
         Assert.assertNotNull(testResults);
         Assert.assertTrue(testResults.isEmpty());
@@ -126,31 +126,31 @@ public class TestResultRepositoryTests {
     public void findSeveralBySiteUserAndTest() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
         courseThemeRepository.save(firstCourseTheme);
 
-        Test firstTest = new Test(1,firstCourseTheme,"Name");
+        Test firstTest = new Test(1, firstCourseTheme, "Name");
         testRepository.save(firstTest);
 
-        TestQuestion firstQuestion = new TestQuestion(1,firstTest,"Text");
+        TestQuestion firstQuestion = new TestQuestion(1, firstTest, "Text");
         testQuestionRepository.save(firstQuestion);
 
-        TestAnswer firstAnswer = new TestAnswer(1,firstQuestion,"Answer",10);
+        TestAnswer firstAnswer = new TestAnswer(1, firstQuestion, "Answer", 10);
         testAnswerRepository.save(firstAnswer);
 
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
 
-        List<TestResult> testResults = new ArrayList<TestResult>();
-        for(int i=0;i<10;i++) {
-            testResults.add(new TestResult(firstTest,firstUser,10,new Date(100-i)));
-            testResultRepository.save(testResults.get(testResults.size()-1));
+        List<TestResult> testResults = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            testResults.add(new TestResult(firstTest, firstUser, 10, new Date(100 - i)));
+            testResultRepository.save(testResults.get(testResults.size() - 1));
         }
 
-        List<TestResult> foundedTestResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(firstUser,firstTest);
+        List<TestResult> foundedTestResults = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(firstUser, firstTest);
 
         Assert.assertNotNull(foundedTestResults);
         Assert.assertEquals(testResults.size(), foundedTestResults.size());

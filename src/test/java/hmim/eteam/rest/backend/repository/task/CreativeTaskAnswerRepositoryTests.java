@@ -50,7 +50,7 @@ public class CreativeTaskAnswerRepositoryTests {
     public void findByStudentAndTaskExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1,firstCourse,"Name");
@@ -76,7 +76,7 @@ public class CreativeTaskAnswerRepositoryTests {
     public void findByStudentAndTaskNotExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1,firstCourse,"Name");
@@ -104,7 +104,7 @@ public class CreativeTaskAnswerRepositoryTests {
     public void findSeveralByStudentAndTask() {
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "Name");
@@ -116,7 +116,7 @@ public class CreativeTaskAnswerRepositoryTests {
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
 
-        List<CreativeTaskAnswer> creativeTaskAnswers = new ArrayList<CreativeTaskAnswer>();
+        List<CreativeTaskAnswer> creativeTaskAnswers = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             creativeTaskAnswers.add(new CreativeTaskAnswer(firstCreativeTask, firstUser, "Answer", new Date(100 - i)));
             creativeTaskAnswerRepository.save(creativeTaskAnswers.get(creativeTaskAnswers.size() - 1));

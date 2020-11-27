@@ -2,6 +2,7 @@ package hmim.eteam.rest.backend.api;
 
 import hmim.eteam.rest.backend.controller.AuthController;
 import hmim.eteam.rest.backend.controller.CourseController;
+import hmim.eteam.rest.backend.controller.UserController;
 import hmim.eteam.rest.backend.model.*;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
@@ -27,6 +28,7 @@ import java.util.List;
 public class Router implements DefaultApi {
     private final AuthController authController;
     private final CourseController courseController;
+    private final UserController userController;
 
     public Router(CourseRepository courseRepository, CourseThemeRepository courseThemeRepository,
                   MessageRepository forumMessageRepository, ThemeRepository forumThemeRepository,
@@ -42,6 +44,7 @@ public class Router implements DefaultApi {
         IRoleResolver roleResolver = new RoleResolver(authTokenRepository, courseRepository, courseRoleRepository);
         authController = new AuthController(siteUserRepository, authTokenRepository);
         courseController = new CourseController(roleResolver, courseRepository, courseRoleRepository);
+        userController = new UserController(authTokenRepository);
     }
 
     @Override
@@ -57,6 +60,11 @@ public class Router implements DefaultApi {
     @Override
     public ResponseEntity<AuthenticationToken> registration(@Valid UserRegistrationInfo userRegistrationInfo) {
         return authController.register(userRegistrationInfo);
+    }
+
+    @Override
+    public ResponseEntity<SelfInfo> me(String token) {
+        return userController.me(token);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package hmim.eteam.rest.backend.entity.user;
 
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
+import hmim.eteam.rest.backend.model.SelfInfo;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
@@ -44,5 +45,11 @@ public class SiteUser extends IdentifiedEntity {
 
     public boolean isSuperAdmin() {
         return isSuperAdmin;
+    }
+
+    public SelfInfo toApiRepresentation() {
+        return new SelfInfo().
+                name(getVisibleName()).
+                isSuperAdmin(isSuperAdmin());
     }
 }

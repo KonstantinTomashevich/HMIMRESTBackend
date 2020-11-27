@@ -2,6 +2,7 @@ package hmim.eteam.rest.backend.api;
 
 import hmim.eteam.rest.backend.controller.AuthController;
 import hmim.eteam.rest.backend.controller.CourseController;
+import hmim.eteam.rest.backend.controller.CreativeTaskController;
 import hmim.eteam.rest.backend.controller.UserController;
 import hmim.eteam.rest.backend.model.*;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
@@ -29,6 +30,7 @@ public class Router implements DefaultApi {
     private final AuthController authController;
     private final CourseController courseController;
     private final UserController userController;
+    private final CreativeTaskController creativeTaskController;
 
     public Router(CourseRepository courseRepository, CourseThemeRepository courseThemeRepository,
                   MessageRepository forumMessageRepository, ThemeRepository forumThemeRepository,
@@ -45,10 +47,13 @@ public class Router implements DefaultApi {
         authController = new AuthController(siteUserRepository, authTokenRepository);
         courseController = new CourseController(roleResolver, courseRepository, courseRoleRepository);
         userController = new UserController(authTokenRepository);
+
+        creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,
+                creativeTaskAnswerRepository, authTokenRepository, siteUserRepository);
     }
 
     @Override
-    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull @Valid String id) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull @Valid Integer id) {
         return courseController.courseRoles(token, id);
     }
 
@@ -70,5 +75,10 @@ public class Router implements DefaultApi {
     @Override
     public ResponseEntity<AuthenticationToken> login(@Valid UserLoginInfo userLoginInfo) {
         return authController.login(userLoginInfo);
+    }
+
+    @Override
+    public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Integer id, @Valid Integer participant) {
+        return creativeTaskController.taskIdAnswersGet(token, id, participant);
     }
 }

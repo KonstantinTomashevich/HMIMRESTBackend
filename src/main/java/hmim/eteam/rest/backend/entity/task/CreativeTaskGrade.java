@@ -2,6 +2,7 @@ package hmim.eteam.rest.backend.entity.task;
 
 import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
+import hmim.eteam.rest.backend.model.TeacherEvaluation;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -46,5 +47,14 @@ public class CreativeTaskGrade extends IdentifiedEntity {
 
     public SiteUser getTeacher() {
         return teacher;
+    }
+
+    public TeacherEvaluation toApiRepresentation() {
+        return new TeacherEvaluation().
+                id(getId().toString()).
+                comment(getComment()).
+                value(getGrade()).
+                answer(answer.getId().toString()).
+                teacher(teacher.getId().toString());
     }
 }

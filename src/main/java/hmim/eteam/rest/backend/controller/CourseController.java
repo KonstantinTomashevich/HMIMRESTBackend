@@ -13,8 +13,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class CourseController {
     private final IRoleResolver roleResolver;
@@ -28,25 +26,17 @@ public class CourseController {
         this.courseRoleRepository = courseRoleRepository;
     }
 
-    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull String courseIdString) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull Integer courseId) {
         if (token == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        long courseId;
-        try {
-            courseId = Long.parseLong(courseIdString);
-        } catch (Exception exception) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, exception.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        Optional<hmim.eteam.rest.backend.entity.course.Course> course = courseRepository.findById(courseId);
+        Optional<hmim.eteam.rest.backend.entity.course.Course> course = courseRepository.findById((long) courseId);
         if (!course.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        UserRole role = roleResolver.resolve(token, courseId);
+        UserRole role = roleResolver.resolve(token, (long) courseId);
         if (role == UserRole.Admin) {
             List<hmim.eteam.rest.backend.entity.user.CourseRole> allRoles =
                     courseRoleRepository.findByCourse(course.get());

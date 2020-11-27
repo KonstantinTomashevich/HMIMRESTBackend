@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +28,7 @@ public class CourseController {
         this.courseRoleRepository = courseRoleRepository;
     }
 
-    public ResponseEntity<CourseRole> courseRoles(String token, @NotNull String courseIdString) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull String courseIdString) {
         if (token == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -52,12 +51,9 @@ public class CourseController {
             List<hmim.eteam.rest.backend.entity.user.CourseRole> allRoles =
                     courseRoleRepository.findByCourse(course.get());
 
-            // TODO: Temporary stub because of incorrect API specification.
-            if (allRoles.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else {
-                return new ResponseEntity<>(allRoles.get(0).toApiRepresentation(), HttpStatus.OK);
-            }
+            List<CourseRole> allRolesRepresentation = new ArrayList<>();
+            allRoles.forEach(foundRole -> allRolesRepresentation.add(foundRole.toApiRepresentation()));
+            return new ResponseEntity<>(allRolesRepresentation, HttpStatus.OK);
 
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);

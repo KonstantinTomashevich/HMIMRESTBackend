@@ -123,7 +123,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CourseRole'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseRole'
         "400":
           description: Invalid course id was provided
         "404":
@@ -372,6 +374,7 @@ paths:
           type: string
       - name: participant
         in: query
+        description: Participant id
         required: false
         style: form
         explode: true
@@ -408,6 +411,7 @@ paths:
           type: string
       - name: participant
         in: query
+        description: Participant id
         required: false
         style: form
         explode: true
@@ -444,14 +448,15 @@ paths:
           type: string
       - name: participant
         in: query
-        required: false
+        description: Participant id
+        required: true
         style: form
         explode: true
         schema:
           type: string
       responses:
         "200":
-          description: Successfully retrieved result(s) for specific test for specific user (if nil - return all answers for all users)
+          description: Successfully retrieved answer(s) for specific task for specific user (if nil - return all answers for all users)
           content:
             application/json:
               schema:
@@ -521,9 +526,6 @@ components:
     CourseRole:
       type: object
       properties:
-        id:
-          type: string
-          nullable: false
         name:
           type: string
           nullable: false
@@ -539,9 +541,6 @@ components:
       type: object
       properties:
         name:
-          type: string
-          nullable: false
-        login:
           type: string
           nullable: false
         isSuperAdmin:

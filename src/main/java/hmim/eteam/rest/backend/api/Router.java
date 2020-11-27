@@ -45,7 +45,7 @@ public class Router implements DefaultApi {
     }
 
     @Override
-    public ResponseEntity<CourseRole> courseRoles(String token, @NotNull @Valid String id) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull @Valid String id) {
         return courseController.courseRoles(token, id);
     }
 

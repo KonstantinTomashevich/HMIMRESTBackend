@@ -682,7 +682,7 @@ components:
         score:
           minimum: 0
           type: integer
-          format: integer
+          format: int64
           default: 0
         participant:
           type: string

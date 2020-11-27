@@ -1,20 +1,17 @@
----
 openapi: 3.0.0
 info:
-  title: SelfEducation
   description: SelfEducation
-  termsOfService: http://swagger.io/terms/
+  version: 1.0.1
+  title: SelfEducation
+  termsOfService: 'http://swagger.io/terms/'
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
-externalDocs:
-  description: Find out more about SelfEducation at selfeducation.org
-  url: selfeducation.org
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-- url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://petstore.swagger.io/v2
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.0
+  - url: 'https://petstore.swagger.io/v2'
 paths:
   /register:
     post:
@@ -37,14 +34,14 @@ paths:
       summary: Retrieve self information
       operationId: me
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully retrieved information about self
@@ -76,14 +73,14 @@ paths:
       description: Retrieve information about courses without fetching materials
       operationId: courses
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully retrieved courses
@@ -101,22 +98,22 @@ paths:
       description: Retrieve course roles for all participants
       operationId: courseRoles
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: query
-        description: Course id
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Course id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved course roles
@@ -135,22 +132,22 @@ paths:
       summary: Retrieve images for theme
       operationId: themeImages
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved images for theme
@@ -167,22 +164,22 @@ paths:
       summary: Retrieve videos for theme
       operationId: themeVideos
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved videos for theme
@@ -199,22 +196,22 @@ paths:
       summary: Retrieve tasks for theme
       operationId: themeTasks
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved tasks for theme
@@ -231,22 +228,22 @@ paths:
       summary: Retrieve tests for theme
       operationId: themeTests
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved tests for theme
@@ -263,22 +260,22 @@ paths:
       summary: Retrieve texts for theme
       operationId: themeTexts
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved texts for theme
@@ -295,22 +292,22 @@ paths:
       summary: Retrieve statuses for theme (admin only)
       operationId: themeStatuses
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved statuses for theme
@@ -327,22 +324,22 @@ paths:
       summary: Retrieve test questions
       operationId: testQuestions
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Test id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
       responses:
         "200":
           description: Successfully retrieved questions by test id
@@ -356,31 +353,31 @@ paths:
     get:
       summary: Retrieve answers of the test for specified user
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
-      - name: participant
-        in: query
-        description: Participant id
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          nullable: true
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Test id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+        - name: participant
+          in: query
+          description: Participant id
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            nullable: true
       responses:
         "200":
           description: Successfully retrieved answers for specific test for specific user (if nil - return all answers for all users)
@@ -394,31 +391,31 @@ paths:
     get:
       summary: Retrieve answers of the test for specified user
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
-      - name: participant
-        in: query
-        description: Participant id
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: integer
-          nullable: true
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Test id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+        - name: participant
+          in: query
+          description: Participant id
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            nullable: true
       responses:
         "200":
           description: Successfully retrieved result(s) for specific test for specific user (if nil - return all results for all users)
@@ -432,31 +429,31 @@ paths:
     get:
       summary: Retrieve answers of the task for specified user
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Task id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: integer
-      - name: participant
-        in: query
-        description: Participant id
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: integer
-          nullable: true
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Task id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+        - name: participant
+          in: query
+          description: Participant id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+            nullable: true
       responses:
         "200":
           description: Successfully retrieved answer(s) for specific task for specific user (if nil - return all answers for all users)
@@ -534,9 +531,9 @@ components:
           nullable: false
           default: guest
           enum:
-          - guest
-          - student
-          - admin
+            - guest
+            - student
+            - admin
         participantId:
           type: string
           nullable: false

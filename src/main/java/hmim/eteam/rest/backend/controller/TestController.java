@@ -31,12 +31,12 @@ public class TestController {
         this.authTokenRepository = authTokenRepository;
     }
 
-    public ResponseEntity<List<TestAnswer>> testResultsResultIdAnswersGet(String token, Integer resultId) {
+    public ResponseEntity<List<TestAnswer>> testResultsResultIdAnswersGet(String token, Long resultId) {
         if (token == null || resultId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Optional<TestResult> testResult = testResultRepository.findById((long) resultId);
+        Optional<TestResult> testResult = testResultRepository.findById(resultId);
         if (!testResult.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

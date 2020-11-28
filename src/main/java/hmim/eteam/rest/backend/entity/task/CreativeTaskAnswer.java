@@ -60,10 +60,10 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
     public hmim.eteam.rest.backend.model.CreativeTaskAnswer toApiRepresentation() {
         hmim.eteam.rest.backend.model.CreativeTaskAnswer answer =
                 new hmim.eteam.rest.backend.model.CreativeTaskAnswer().
-                        id(getId().toString()).
+                        id(getId()).
                         text(getAnswer()).
-                        participant(student.getId().toString()).
-                        task(task.getId().toString()).
+                        participant(student.getId()).
+                        task(task.getId()).
                         date(new RFC3339DateFormat().format(date));
 
         grades.forEach(grade -> answer.addEvaluationsItem(grade.toApiRepresentation()));

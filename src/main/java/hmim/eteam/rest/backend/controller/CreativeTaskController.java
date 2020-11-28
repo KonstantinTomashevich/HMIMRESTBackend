@@ -35,12 +35,12 @@ public class CreativeTaskController {
         this.siteUserRepository = siteUserRepository;
     }
 
-    public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Integer id, @Valid Integer participant) {
+    public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Long id, Long participant) {
         if (token == null || id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Optional<CreativeTask> creativeTask = creativeTaskRepository.findById((long) id);
+        Optional<CreativeTask> creativeTask = creativeTaskRepository.findById(id);
         if (!creativeTask.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -61,7 +61,7 @@ public class CreativeTaskController {
         if (participant == null) {
             answers = creativeTaskAnswerRepository.findByTaskOrderByDateAsc(creativeTask.get());
         } else {
-            Optional<SiteUser> user = siteUserRepository.findById((long) participant);
+            Optional<SiteUser> user = siteUserRepository.findById(participant);
             if (!user.isPresent()) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

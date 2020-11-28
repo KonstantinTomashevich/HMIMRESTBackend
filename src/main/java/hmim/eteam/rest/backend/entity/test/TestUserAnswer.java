@@ -34,10 +34,10 @@ public class TestUserAnswer extends IdentifiedEntity {
 
     public hmim.eteam.rest.backend.model.TestAnswer toApiRepresentation() {
         return new hmim.eteam.rest.backend.model.TestAnswer().
-                id(getId().toString()).
+                id(getId()).
                 name(answer.getAnswer()).
                 priority(Math.toIntExact(answer.getPriority())).
                 score(answer.getPoints()).
-                participant(result.getUser().getId().toString());
+                participant(result.getUser().getId());
     }
 }

@@ -26,17 +26,17 @@ public class CourseController {
         this.courseRoleRepository = courseRoleRepository;
     }
 
-    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull Integer courseId) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull Long courseId) {
         if (token == null) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        Optional<hmim.eteam.rest.backend.entity.course.Course> course = courseRepository.findById((long) courseId);
+        Optional<hmim.eteam.rest.backend.entity.course.Course> course = courseRepository.findById(courseId);
         if (!course.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        UserRole role = roleResolver.resolve(token, (long) courseId);
+        UserRole role = roleResolver.resolve(token, courseId);
         if (role == UserRole.Admin) {
             List<hmim.eteam.rest.backend.entity.user.CourseRole> allRoles =
                     courseRoleRepository.findByCourse(course.get());

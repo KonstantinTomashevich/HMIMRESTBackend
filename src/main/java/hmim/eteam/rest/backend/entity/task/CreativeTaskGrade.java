@@ -51,10 +51,10 @@ public class CreativeTaskGrade extends IdentifiedEntity {
 
     public TeacherEvaluation toApiRepresentation() {
         return new TeacherEvaluation().
-                id(getId().toString()).
+                id(getId()).
                 comment(getComment()).
                 value(getGrade()).
-                answer(answer.getId().toString()).
-                teacher(teacher.getId().toString());
+                answer(answer.getId()).
+                teacher(teacher.getId());
     }
 }

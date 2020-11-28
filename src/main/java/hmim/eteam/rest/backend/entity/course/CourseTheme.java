@@ -35,7 +35,7 @@ public class CourseTheme extends OrderedEntity {
 
     public Theme toApiRepresentation() {
         return new Theme().
-                id(getId().toString()).
+                id(getId()).
                 name(getName()).
                 priority(getPriority().intValue());
     }

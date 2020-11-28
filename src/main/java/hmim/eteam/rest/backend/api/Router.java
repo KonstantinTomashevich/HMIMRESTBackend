@@ -52,7 +52,7 @@ public class Router implements DefaultApi {
     }
 
     @Override
-    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull @Valid Integer id) {
+    public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull @Valid Long id) {
         return courseController.courseRoles(token, id);
     }
 
@@ -77,12 +77,12 @@ public class Router implements DefaultApi {
     }
 
     @Override
-    public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Integer id, @Valid Integer participant) {
+    public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Long id, @Valid Long participant) {
         return creativeTaskController.taskIdAnswersGet(token, id, participant);
     }
 
     @Override
-    public ResponseEntity<List<TestAnswer>> testResultsResultIdAnswersGet(String token, Integer resultId) {
+    public ResponseEntity<List<TestAnswer>> testResultsResultIdAnswersGet(String token, Long resultId) {
         return testController.testResultsResultIdAnswersGet(token, resultId);
     }
 }

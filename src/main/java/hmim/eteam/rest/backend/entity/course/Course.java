@@ -35,7 +35,7 @@ public class Course extends OrderedEntity {
 
     public hmim.eteam.rest.backend.model.Course toApiRepresentation() {
         hmim.eteam.rest.backend.model.Course course = new hmim.eteam.rest.backend.model.Course();
-        course.id(getId().toString()).
+        course.id(getId()).
                 name(name).
                 priority(getPriority().intValue());
 

@@ -60,7 +60,7 @@ public class ForumTheme extends IdentifiedEntity {
 
     public hmim.eteam.rest.backend.model.ForumTheme toApiRepresentation() {
         return new hmim.eteam.rest.backend.model.ForumTheme().
-                id(getId().toString()).
+                id(getId()).
                 lastUpdateDate(new RFC3339DateFormat().format(lastUpdateDate)).
                 name(name);
     }

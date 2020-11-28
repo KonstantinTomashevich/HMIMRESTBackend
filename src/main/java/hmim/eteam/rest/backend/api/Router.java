@@ -97,7 +97,7 @@ public class Router implements DefaultApi {
         return authController.register(userRegistrationInfo);
     }
 
-    @ApiOperation(value = "Retrieve self information", nickname = "me", notes = "", response = SelfInfo.class, tags = {})
+    @ApiOperation(value = "Retrieve self information", nickname = "me", response = SelfInfo.class, tags = {})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved information about self", response = SelfInfo.class),
             @ApiResponse(code = 404, message = "Info about the user wasn't found")})
@@ -123,7 +123,7 @@ public class Router implements DefaultApi {
         return authController.login(userLoginInfo);
     }
 
-    @ApiOperation(value = "Retrieve answers of the task for specified user", nickname = "taskIdAnswersGet", notes = "", response = CreativeTaskAnswer.class, responseContainer = "List", tags = {})
+    @ApiOperation(value = "Retrieve answers of the task for specified user", nickname = "taskIdAnswersGet", response = CreativeTaskAnswer.class, responseContainer = "List", tags = {})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved answer(s) for specific task for specific user (if nil - return all answers for all users)", response = CreativeTaskAnswer.class, responseContainer = "List")})
     @RequestMapping(value = "/task/{id}/answers",
@@ -137,7 +137,7 @@ public class Router implements DefaultApi {
         return creativeTaskController.taskIdAnswersGet(token, id, participant);
     }
 
-    @ApiOperation(value = "Retrieve user answers of the test in specific attempt", nickname = "testResultsResultIdAnswersGet", notes = "", response = TestAnswer.class, responseContainer = "List", tags = {})
+    @ApiOperation(value = "Retrieve user answers of the test in specific attempt", nickname = "testResultsResultIdAnswersGet", response = TestAnswer.class, responseContainer = "List", tags = {})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved answers for specific test attempt.", response = TestAnswer.class, responseContainer = "List")})
     @RequestMapping(value = "/test/results/{resultId}/answers/",

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
@@ -20,6 +21,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AuthController {
+    // TODO: Move to configuration.
+    private static final int SESSION_LENGTH_IN_MINUTES = 24 * 60;
+
     private final SiteUserRepository siteUserRepository;
     private final AuthTokenRepository authTokenRepository;
 
@@ -63,7 +67,11 @@ public class AuthController {
             --triesLeft;
         } while (authTokenRepository.existsById(id) || triesLeft == 0);
 
-        return authTokenRepository.save(new AuthToken(id, siteUser, new Date()));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+
+        calendar.add(Calendar.MINUTE, SESSION_LENGTH_IN_MINUTES);
+        return authTokenRepository.save(new AuthToken(id, siteUser, calendar.getTime()));
     }
 
     public ResponseEntity<AuthenticationToken> login(UserLoginInfo input) {

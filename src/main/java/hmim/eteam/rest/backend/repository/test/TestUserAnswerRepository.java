@@ -10,5 +10,5 @@ import java.util.List;
 
 @RepositoryRestResource(exported = false)
 public interface TestUserAnswerRepository extends CrudRepository<TestUserAnswer, Long> {
-    List<TestUserAnswer> findBySiteUserAndResult(SiteUser siteUser, TestResult result);
+    List<TestUserAnswer> findByResult(TestResult result);
 }

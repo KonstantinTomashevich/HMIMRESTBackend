@@ -349,9 +349,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TestQuestion'
-  /test/{id}/answers:
+  /test/results/{resultId}/answers/:
     get:
-      summary: Retrieve answers of the test for specified user
+      summary: Retrieve user answers of the test in specific attempt
       parameters:
         - name: token
           in: header
@@ -361,26 +361,17 @@ paths:
           explode: true
           schema:
             type: string
-        - name: id
+        - name: resultId
           in: path
-          description: Test id
+          description: Test result id
           required: true
           style: simple
           explode: true
           schema:
             type: integer
-        - name: participant
-          in: query
-          description: Participant id
-          required: false
-          style: form
-          explode: true
-          schema:
-            type: integer
-            nullable: true
       responses:
         "200":
-          description: Successfully retrieved answers for specific test for specific user (if nil - return all answers for all users)
+          description: Successfully retrieved answers for specific test attempt.
           content:
             application/json:
               schema:

@@ -1,9 +1,6 @@
 package hmim.eteam.rest.backend.api;
 
-import hmim.eteam.rest.backend.controller.AuthController;
-import hmim.eteam.rest.backend.controller.CourseController;
-import hmim.eteam.rest.backend.controller.CreativeTaskController;
-import hmim.eteam.rest.backend.controller.UserController;
+import hmim.eteam.rest.backend.controller.*;
 import hmim.eteam.rest.backend.model.*;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
@@ -31,6 +28,7 @@ public class Router implements DefaultApi {
     private final CourseController courseController;
     private final UserController userController;
     private final CreativeTaskController creativeTaskController;
+    private final TestController testController;
 
     public Router(CourseRepository courseRepository, CourseThemeRepository courseThemeRepository,
                   MessageRepository forumMessageRepository, ThemeRepository forumThemeRepository,
@@ -50,6 +48,7 @@ public class Router implements DefaultApi {
 
         creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,
                 creativeTaskAnswerRepository, authTokenRepository, siteUserRepository);
+        testController = new TestController(roleResolver, testResultRepository, testUserAnswerRepository, authTokenRepository);
     }
 
     @Override
@@ -80,5 +79,10 @@ public class Router implements DefaultApi {
     @Override
     public ResponseEntity<List<CreativeTaskAnswer>> taskIdAnswersGet(String token, Integer id, @Valid Integer participant) {
         return creativeTaskController.taskIdAnswersGet(token, id, participant);
+    }
+
+    @Override
+    public ResponseEntity<List<TestAnswer>> testResultsResultIdAnswersGet(String token, Integer resultId) {
+        return testController.testResultsResultIdAnswersGet(token, resultId);
     }
 }

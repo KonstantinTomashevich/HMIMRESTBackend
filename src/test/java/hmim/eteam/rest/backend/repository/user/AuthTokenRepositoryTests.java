@@ -22,43 +22,42 @@ public class AuthTokenRepositoryTests {
     @Autowired
     private SiteUserRepository siteUserRepository;
 
-    public void clearDatabase(){
+    public void clearDatabase() {
         authTokenRepository.deleteAll();
         siteUserRepository.deleteAll();
     }
 
     @Test
-    public void resolveTokenExists(){
+    public void resolveTokenExists() {
         clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
-        AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date(new Date().getTime()+1000000));
+        AuthToken firstAuthToken = new AuthToken("id", firstUser, new Date(new Date().getTime() + 1000000));
         authTokenRepository.save(firstAuthToken);
 
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id");
         Assert.assertTrue(authToken.isPresent());
-        Assert.assertEquals(firstAuthToken,authToken.get());
+        Assert.assertEquals(firstAuthToken, authToken.get());
     }
 
     @Test
-    public void resolveTokenExistsButExpired(){
+    public void resolveTokenExistsButExpired() {
         clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
-        AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date());
+        AuthToken firstAuthToken = new AuthToken("id", firstUser, new Date(0));
         authTokenRepository.save(firstAuthToken);
 
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id");
         Assert.assertFalse(authToken.isPresent());
-
     }
 
     @Test
-    public void resolveTokenNotExists(){
+    public void resolveTokenNotExists() {
         clearDatabase();
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
-        AuthToken firstAuthToken = new AuthToken("id",firstUser,new Date(new Date().getTime()+10000));
+        AuthToken firstAuthToken = new AuthToken("id", firstUser, new Date(new Date().getTime() + 10000));
         authTokenRepository.save(firstAuthToken);
 
         Optional<AuthToken> authToken = authTokenRepository.resolveToken("id1");

@@ -49,6 +49,7 @@ public class SiteUser extends IdentifiedEntity {
 
     public SelfInfo toApiRepresentation() {
         return new SelfInfo().
+                id(getId()).
                 name(getVisibleName()).
                 isSuperAdmin(isSuperAdmin());
     }

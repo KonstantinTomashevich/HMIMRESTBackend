@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: SelfEducation
-  version: 1.0.3
+  version: 1.0.4
   title: SelfEducation
   termsOfService: 'http://swagger.io/terms/'
   license:
@@ -569,6 +569,9 @@ components:
     SelfInfo:
       type: object
       properties:
+        id:
+          type: integer
+          format: int64
         name:
           type: string
           nullable: false

@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: SelfEducation
-  version: 1.0.4
+  version: 1.0.5
   title: SelfEducation
   termsOfService: 'http://swagger.io/terms/'
   license:
@@ -10,7 +10,7 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.2
+    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.4
   - url: 'https://petstore.swagger.io/v2'
 paths:
   /register:
@@ -477,7 +477,7 @@ components:
           nullable: false
         finishDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: false
       required:
         - value
@@ -491,7 +491,7 @@ components:
           nullable: false
         lastUpdateDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: false
         name:
           type: string
@@ -706,7 +706,7 @@ components:
           nullable: false
         date:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: false
         evaluations:
           type: array
@@ -757,7 +757,7 @@ components:
           nullable: false
         finishDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: true
         score:
           minimum: 0

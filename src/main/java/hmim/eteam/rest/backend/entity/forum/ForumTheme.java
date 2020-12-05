@@ -1,12 +1,12 @@
 package hmim.eteam.rest.backend.entity.forum;
 
-import hmim.eteam.rest.backend.RFC3339DateFormat;
 import hmim.eteam.rest.backend.entity.course.Course;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 @Entity
@@ -61,7 +61,7 @@ public class ForumTheme extends IdentifiedEntity {
     public hmim.eteam.rest.backend.model.ForumTheme toApiRepresentation() {
         return new hmim.eteam.rest.backend.model.ForumTheme().
                 id(getId()).
-                lastUpdateDate(new RFC3339DateFormat().format(lastUpdateDate)).
+                lastUpdateDate(lastUpdateDate.toInstant().atOffset(ZoneOffset.UTC)).
                 name(name);
     }
 }

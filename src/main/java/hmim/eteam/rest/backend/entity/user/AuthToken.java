@@ -1,5 +1,8 @@
 package hmim.eteam.rest.backend.entity.user;
 
+import hmim.eteam.rest.backend.RFC3339DateFormat;
+import hmim.eteam.rest.backend.model.AuthenticationToken;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -39,6 +42,12 @@ public class AuthToken {
 
     public Date getExpireDate() {
         return expireDate;
+    }
+
+    public AuthenticationToken toApiRepresentation() {
+        return new AuthenticationToken().
+                value(getId()).
+                finishDate(RFC3339DateFormat.getInstance().format(getExpireDate()));
     }
 
     @Override

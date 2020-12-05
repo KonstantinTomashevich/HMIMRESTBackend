@@ -87,7 +87,7 @@ public class Router implements DefaultApi {
     @ApiOperation(value = "Register new user", nickname = "registration", notes = "The process when a user provide new", response = AuthenticationToken.class, tags = {})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully registered", response = AuthenticationToken.class),
-            @ApiResponse(code = 400, message = "The login or password is already used")})
+            @ApiResponse(code = 409, message = "The login or password is already used") })
     @RequestMapping(value = "/register",
             produces = {"application/json"},
             consumes = {"application/json"},

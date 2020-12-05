@@ -41,13 +41,13 @@ public class AuthController {
         }
 
         if (siteUserRepository.existsByLoginMD5(registration.getLogin())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
         SiteUser user = siteUserRepository.save(new SiteUser(registration.getName(),
                 registration.getLogin(), registration.getPassword(), false));
 
-        return new ResponseEntity<>(new AuthenticationToken().value(generateToken(user).getId()), HttpStatus.OK);
+        return new ResponseEntity<>(generateToken(user).toApiRepresentation(), HttpStatus.OK);
     }
 
     public String md5(String input) throws NoSuchAlgorithmException {

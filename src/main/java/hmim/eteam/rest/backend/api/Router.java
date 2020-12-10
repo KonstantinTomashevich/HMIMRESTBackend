@@ -55,7 +55,7 @@ public class Router implements DefaultApi {
                 creativeTaskAnswerRepository, authTokenRepository, siteUserRepository);
 
         testController = new TestController(roleResolver, testRepository, testResultRepository,
-                testUserAnswerRepository, authTokenRepository);
+                testQuestionRepository, testUserAnswerRepository, authTokenRepository);
     }
 
     @ApiOperation(value = "Retrieve course roles (admin only)", nickname = "courseRoles", notes = "Retrieve course roles for all participants", response = CourseRole.class, responseContainer = "List", tags = {})
@@ -163,5 +163,18 @@ public class Router implements DefaultApi {
             @ApiParam(value = "Test id", required = true) @PathVariable("id") Long id,
             @ApiParam(value = "Participant id") @Valid @RequestParam(value = "participant", required = false) Long participant) {
         return testController.testIdResultsGet(token, id, participant);
+    }
+
+    @ApiOperation(value = "Retrieve test questions", nickname = "testQuestions", response = TestQuestion.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved questions by test id", response = TestQuestion.class, responseContainer = "List")})
+    @RequestMapping(value = "/test/{id}/questions",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    @Override
+    public ResponseEntity<List<TestQuestion>> testQuestions(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Test id", required = true) @PathVariable("id") Long id) {
+        return testController.testQuestions(token, id);
     }
 }

@@ -26,7 +26,11 @@ class RoleResolver implements IRoleResolver {
 
     @Override
     public UserRole resolve(@NotNull String authTokenId, @Nullable Long courseId) {
-        Optional<AuthToken> authToken = authTokenRepository.resolveToken(authTokenId);
+        return resolve(authTokenRepository.resolveToken(authTokenId), courseId);
+    }
+
+    @Override
+    public UserRole resolve(@NotNull Optional<AuthToken> authToken, Long courseId) {
         if (!authToken.isPresent()) {
             return UserRole.Guest;
 

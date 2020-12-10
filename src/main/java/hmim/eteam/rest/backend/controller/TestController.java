@@ -1,11 +1,13 @@
 package hmim.eteam.rest.backend.controller;
 
 import hmim.eteam.rest.backend.api.IRoleResolver;
+import hmim.eteam.rest.backend.entity.test.Test;
 import hmim.eteam.rest.backend.entity.test.TestResult;
 import hmim.eteam.rest.backend.entity.test.TestUserAnswer;
 import hmim.eteam.rest.backend.entity.user.AuthToken;
 import hmim.eteam.rest.backend.entity.user.UserRole;
 import hmim.eteam.rest.backend.model.TestAnswer;
+import hmim.eteam.rest.backend.repository.test.TestRepository;
 import hmim.eteam.rest.backend.repository.test.TestResultRepository;
 import hmim.eteam.rest.backend.repository.test.TestUserAnswerRepository;
 import hmim.eteam.rest.backend.repository.user.AuthTokenRepository;
@@ -15,16 +17,21 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TestController {
     private final IRoleResolver roleResolver;
+    private final TestRepository testRepository;
     private final TestResultRepository testResultRepository;
     private final TestUserAnswerRepository testUserAnswerRepository;
     private final AuthTokenRepository authTokenRepository;
 
-    public TestController(IRoleResolver roleResolver, TestResultRepository testResultRepository,
+    public TestController(IRoleResolver roleResolver, TestRepository testRepository,
+                          TestResultRepository testResultRepository,
                           TestUserAnswerRepository testUserAnswerRepository,
                           AuthTokenRepository authTokenRepository) {
+        this.testRepository = testRepository;
         this.roleResolver = roleResolver;
         this.testResultRepository = testResultRepository;
         this.testUserAnswerRepository = testUserAnswerRepository;
@@ -41,18 +48,53 @@ public class TestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        UserRole role = roleResolver.resolve(token, testResult.get().getTest().getTheme().getCourse().getId());
-        if (role != UserRole.Admin) {
-            Optional<AuthToken> authToken = authTokenRepository.resolveToken(token);
-            if (!authToken.isPresent() ||
-                    !authToken.get().getUser().getId().equals(testResult.get().getUser().getId())) {
-                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-            }
+        Optional<AuthToken> authToken = authTokenRepository.resolveToken(token);
+        UserRole role = roleResolver.resolve(authToken, testResult.get().getTest().getTheme().getCourse().getId());
+
+        if (role != UserRole.Admin && (!authToken.isPresent() ||
+                !authToken.get().getUser().getId().equals(testResult.get().getUser().getId()))) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         List<TestUserAnswer> answers = testUserAnswerRepository.findByResult(testResult.get());
         List<TestAnswer> convertedAnswers = new ArrayList<>();
         answers.forEach(answer -> convertedAnswers.add(answer.toApiRepresentation()));
         return new ResponseEntity<>(convertedAnswers, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<hmim.eteam.rest.backend.model.TestResult>> testIdResultsGet(String token, Long testId, Long participant) {
+        if (token == null || testId == null) {
+            Logger.getLogger(getClass().getSimpleName()).log(Level.INFO, "Bad request: no token or test id!");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<Test> test = testRepository.findById(testId);
+        if (!test.isPresent()) {
+            Logger.getLogger(getClass().getSimpleName()).log(Level.INFO,
+                    String.format("Unable to find test with id %d!", testId));
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        Optional<AuthToken> authToken = authTokenRepository.resolveToken(token);
+        if (!authToken.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(authToken, test.get().getTheme().getCourse().getId());
+        if (role != UserRole.Admin && !authToken.get().getUser().getId().equals(participant)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        List<TestResult> results;
+        if (participant == null) {
+            results = testResultRepository.findByTestOrderByFinishDateAsc(test.get());
+        } else {
+            results = testResultRepository.findBySiteUserAndTestOrderByFinishDateAsc(
+                    authToken.get().getUser(), test.get());
+        }
+
+        List<hmim.eteam.rest.backend.model.TestResult> convertedResults = new ArrayList<>();
+        results.forEach(result -> convertedResults.add(result.toApiRepresentation()));
+        return new ResponseEntity<>(convertedResults, HttpStatus.OK);
     }
 }

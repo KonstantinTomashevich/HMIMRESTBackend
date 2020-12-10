@@ -53,7 +53,9 @@ public class Router implements DefaultApi {
 
         creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,
                 creativeTaskAnswerRepository, authTokenRepository, siteUserRepository);
-        testController = new TestController(roleResolver, testResultRepository, testUserAnswerRepository, authTokenRepository);
+
+        testController = new TestController(roleResolver, testRepository, testResultRepository,
+                testUserAnswerRepository, authTokenRepository);
     }
 
     @ApiOperation(value = "Retrieve course roles (admin only)", nickname = "courseRoles", notes = "Retrieve course roles for all participants", response = CourseRole.class, responseContainer = "List", tags = {})
@@ -87,7 +89,7 @@ public class Router implements DefaultApi {
     @ApiOperation(value = "Register new user", nickname = "registration", notes = "The process when a user provide new", response = AuthenticationToken.class, tags = {})
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully registered", response = AuthenticationToken.class),
-            @ApiResponse(code = 409, message = "The login or password is already used") })
+            @ApiResponse(code = 409, message = "The login or password is already used")})
     @RequestMapping(value = "/register",
             produces = {"application/json"},
             consumes = {"application/json"},
@@ -148,5 +150,18 @@ public class Router implements DefaultApi {
             @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
             @ApiParam(value = "Test result id", required = true) @PathVariable("resultId") Long resultId) {
         return testController.testResultsResultIdAnswersGet(token, resultId);
+    }
+
+    @ApiOperation(value = "Retrieve answers of the test for specified user", nickname = "testIdResultsGet", response = TestResult.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved result(s) for specific test for specific user (if nil - return all results for all users)", response = TestResult.class, responseContainer = "List")})
+    @RequestMapping(value = "/test/{id}/results",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<TestResult>> testIdResultsGet(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Test id", required = true) @PathVariable("id") Long id,
+            @ApiParam(value = "Participant id") @Valid @RequestParam(value = "participant", required = false) Long participant) {
+        return testController.testIdResultsGet(token, id, participant);
     }
 }

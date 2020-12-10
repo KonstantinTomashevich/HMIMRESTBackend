@@ -10,7 +10,7 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.4
+    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.5
   - url: 'https://petstore.swagger.io/v2'
 paths:
   /register:
@@ -572,6 +572,7 @@ components:
         id:
           type: integer
           format: int64
+          nullable: false
         name:
           type: string
           nullable: false
@@ -775,11 +776,6 @@ components:
           format: int64
           description: Test id
           nullable: false
-        answers:
-          type: array
-          nullable: false
-          items:
-            $ref: '#/components/schemas/TestAnswer'
       required:
         - id
         - score

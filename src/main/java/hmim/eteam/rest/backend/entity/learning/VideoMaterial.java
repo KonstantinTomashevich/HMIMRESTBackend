@@ -22,4 +22,12 @@ public class VideoMaterial extends CourseThemeEntry {
     public String getUrl() {
         return url;
     }
+
+    public hmim.eteam.rest.backend.model.VideoMaterial toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.VideoMaterial().
+                id(getId()).
+                name(getName()).
+                priority(getPriority()).
+                url(getUrl());
+    }
 }

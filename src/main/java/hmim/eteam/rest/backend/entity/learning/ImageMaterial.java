@@ -22,4 +22,12 @@ public class ImageMaterial extends CourseThemeEntry {
     public String getUrl() {
         return url;
     }
+
+    public hmim.eteam.rest.backend.model.ImageMaterial toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.ImageMaterial().
+                id(getId()).
+                name(getName()).
+                priority(getPriority()).
+                url(url);
+    }
 }

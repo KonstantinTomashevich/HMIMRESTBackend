@@ -37,6 +37,6 @@ public class CourseTheme extends OrderedEntity {
         return new Theme().
                 id(getId()).
                 name(getName()).
-                priority(getPriority().intValue());
+                priority(getPriority());
     }
 }

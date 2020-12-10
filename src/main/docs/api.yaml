@@ -156,7 +156,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ImageMaterial'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -189,7 +191,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VideoMaterial'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -222,7 +226,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreativeTask'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreativeTask'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -255,7 +261,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Test'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Test'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -288,7 +296,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TextMaterial'
+                type: array
+                items:
+                 $ref: '#/components/schemas/TextMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -321,7 +331,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThemeStatus'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ThemeStatus'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -512,7 +524,7 @@ components:
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
       required:
         - id
@@ -530,7 +542,7 @@ components:
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         forumThemes:
           type: array
@@ -633,7 +645,7 @@ components:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         url:
           type: string
@@ -654,7 +666,7 @@ components:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         url:
           type: string
@@ -675,7 +687,7 @@ components:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         text:
           type: string
@@ -794,7 +806,7 @@ components:
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
       required:
         - id
@@ -812,7 +824,7 @@ components:
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
       required:
         - id
@@ -830,7 +842,7 @@ components:
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         score:
           type: integer
@@ -858,7 +870,7 @@ components:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         text:
           type: string
@@ -876,7 +888,7 @@ components:
           format: int64
           nullable: false
         wasSeen:
-          type: string
+          type: boolean
           nullable: false
         participant:
           type: integer

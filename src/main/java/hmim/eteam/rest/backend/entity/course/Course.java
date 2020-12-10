@@ -37,7 +37,7 @@ public class Course extends OrderedEntity {
         hmim.eteam.rest.backend.model.Course course = new hmim.eteam.rest.backend.model.Course();
         course.id(getId()).
                 name(name).
-                priority(getPriority().intValue());
+                priority(getPriority());
 
         courseThemes.forEach(courseTheme -> course.addThemesItem(courseTheme.toApiRepresentation()));
         forumThemes.forEach(forumTheme -> course.addForumThemesItem(forumTheme.toApiRepresentation()));

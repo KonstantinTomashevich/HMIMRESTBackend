@@ -4,6 +4,7 @@ import hmim.eteam.rest.backend.controller.*;
 import hmim.eteam.rest.backend.model.*;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
+import hmim.eteam.rest.backend.repository.course.ThemeStatusRepository;
 import hmim.eteam.rest.backend.repository.forum.MessageRepository;
 import hmim.eteam.rest.backend.repository.forum.ThemeRepository;
 import hmim.eteam.rest.backend.repository.learning.ImageMaterialRepository;
@@ -34,6 +35,7 @@ public class Router implements DefaultApi {
     private final UserController userController;
     private final CreativeTaskController creativeTaskController;
     private final TestController testController;
+    private final ThemeController themeController;
 
     public Router(CourseRepository courseRepository, CourseThemeRepository courseThemeRepository,
                   MessageRepository forumMessageRepository, ThemeRepository forumThemeRepository,
@@ -44,7 +46,8 @@ public class Router implements DefaultApi {
                   TestAnswerRepository testAnswerRepository, TestQuestionRepository testQuestionRepository,
                   TestRepository testRepository, TestResultRepository testResultRepository,
                   TestUserAnswerRepository testUserAnswerRepository, AuthTokenRepository authTokenRepository,
-                  CourseRoleRepository courseRoleRepository, SiteUserRepository siteUserRepository) {
+                  CourseRoleRepository courseRoleRepository, SiteUserRepository siteUserRepository,
+                  ThemeStatusRepository themeStatusRepository) {
 
         IRoleResolver roleResolver = new RoleResolver(authTokenRepository, courseRepository, courseRoleRepository);
         authController = new AuthController(siteUserRepository, authTokenRepository);
@@ -56,6 +59,10 @@ public class Router implements DefaultApi {
 
         testController = new TestController(roleResolver, testRepository, testResultRepository,
                 testQuestionRepository, testUserAnswerRepository, authTokenRepository);
+
+        themeController = new ThemeController(roleResolver, courseThemeRepository, imageMaterialRepository,
+                videoMaterialRepository, testRepository, textMaterialRepository, creativeTaskRepository,
+                themeStatusRepository);
     }
 
     @ApiOperation(value = "Retrieve course roles (admin only)", nickname = "courseRoles", notes = "Retrieve course roles for all participants", response = CourseRole.class, responseContainer = "List", tags = {})
@@ -177,4 +184,91 @@ public class Router implements DefaultApi {
             @ApiParam(value = "Test id", required = true) @PathVariable("id") Long id) {
         return testController.testQuestions(token, id);
     }
+
+    @ApiOperation(value = "Retrieve images for theme", nickname = "themeImages", response = ImageMaterial.class, tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved images for theme", response = ImageMaterial.class),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Images weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/images",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    @Override
+    public ResponseEntity<List<ImageMaterial>> themeImages(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeImages(token, id);
+    }
+
+    @ApiOperation(value = "Retrieve statuses for theme (admin only)", nickname = "themeStatuses", response = ThemeStatus.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved statuses for theme", response = ThemeStatus.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Statuses weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/statuses",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<ThemeStatus>> themeStatuses(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeStatuses(token, id);
+    }
+
+    @ApiOperation(value = "Retrieve tasks for theme", nickname = "themeTasks", response = CreativeTask.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved tasks for theme", response = CreativeTask.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Tasks weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/tasks",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<CreativeTask>> themeTasks(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeTasks(token, id);
+    }
+
+    @ApiOperation(value = "Retrieve tests for theme", nickname = "themeTests", response = Test.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved tests for theme", response = Test.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Tests weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/tests",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<Test>> themeTests(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeTests(token, id);
+    }
+
+    @ApiOperation(value = "Retrieve texts for theme", nickname = "themeTexts", response = TextMaterial.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved texts for theme", response = TextMaterial.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Texts weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/texts",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<TextMaterial>> themeTexts(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeTexts(token, id);
+
+    }
+
+    @ApiOperation(value = "Retrieve videos for theme", nickname = "themeVideos", response = VideoMaterial.class, responseContainer = "List", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved videos for theme", response = VideoMaterial.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Invalid theme id was provided"),
+            @ApiResponse(code = 404, message = "Videos weren't found for theme")})
+    @RequestMapping(value = "/theme/{id}/videos",
+            produces = {"application/json"},
+            method = RequestMethod.GET)
+    public ResponseEntity<List<VideoMaterial>> themeVideos(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam(value = "Theme id", required = true) @PathVariable("id") Long id) {
+        return themeController.themeVideos(token, id);
+    }
+
 }

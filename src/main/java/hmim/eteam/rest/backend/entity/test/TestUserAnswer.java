@@ -36,7 +36,7 @@ public class TestUserAnswer extends IdentifiedEntity {
         return new hmim.eteam.rest.backend.model.TestAnswer().
                 id(getId()).
                 name(answer.getAnswer()).
-                priority(Math.toIntExact(answer.getPriority())).
+                priority(answer.getPriority()).
                 score(answer.getPoints()).
                 participant(result.getUser().getId());
     }

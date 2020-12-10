@@ -36,6 +36,6 @@ public class TestQuestion extends OrderedEntity {
         return new hmim.eteam.rest.backend.model.TestQuestion().
                 id(getId()).
                 text(text).
-                priority(getPriority().intValue());
+                priority(getPriority());
     }
 }

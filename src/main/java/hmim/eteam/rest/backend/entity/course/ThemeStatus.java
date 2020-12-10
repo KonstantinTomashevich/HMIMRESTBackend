@@ -40,4 +40,11 @@ public class ThemeStatus extends IdentifiedEntity {
     public SiteUser getSiteUser() {
         return siteUser;
     }
+
+    public hmim.eteam.rest.backend.model.ThemeStatus toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.ThemeStatus().
+                id(getId()).
+                wasSeen(seen).
+                participant(siteUser.getId());
+    }
 }

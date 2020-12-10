@@ -22,4 +22,11 @@ public class CreativeTask extends CourseThemeEntry {
     public String getText() {
         return text;
     }
+
+    public hmim.eteam.rest.backend.model.CreativeTask toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.CreativeTask().
+                id(getId()).
+                name(getName()).
+                priority(getPriority());
+    }
 }

@@ -23,4 +23,17 @@ public enum UserRole {
                 return Role.GUEST;
         }
     }
+
+    public static UserRole valueOf(Role role) {
+        switch (role) {
+            case GUEST:
+                return Guest;
+            case STUDENT:
+                return Student;
+            case ADMIN:
+                return Admin;
+        }
+
+        return null;
+    }
 }

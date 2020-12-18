@@ -43,6 +43,10 @@ public class CourseRole extends IdentifiedEntity {
         return role;
     }
 
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     public hmim.eteam.rest.backend.model.CourseRole toApiRepresentation() {
         return new hmim.eteam.rest.backend.model.CourseRole().
                 name(role.toApiRepresentation()).

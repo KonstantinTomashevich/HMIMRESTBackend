@@ -20,7 +20,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +53,7 @@ public class Router implements DefaultApi {
         authController = new AuthController(siteUserRepository, authTokenRepository);
 
         courseController = new CourseController(roleResolver, courseRepository,
-                courseRoleRepository, themeStatusRepository);
+                courseRoleRepository, themeStatusRepository, siteUserRepository);
         userController = new UserController(authTokenRepository);
 
         creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,
@@ -337,5 +336,17 @@ public class Router implements DefaultApi {
             @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
             @ApiParam() @Valid @RequestBody TestSave testSave) {
         return themeController.testPost(token, testSave);
+    }
+
+    @ApiOperation(value = "Add role to user", nickname = "assignRolePost", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")})
+    @RequestMapping(value = "/assign_role",
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    public ResponseEntity<Void> assignRolePost(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam() @Valid @RequestBody AssignRole data) {
+        return courseController.assignRolePost(token, data);
     }
 }

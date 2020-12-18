@@ -1,13 +1,16 @@
 package hmim.eteam.rest.backend.controller;
 
 import hmim.eteam.rest.backend.api.IRoleResolver;
+import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.user.UserRole;
+import hmim.eteam.rest.backend.model.AssignRole;
 import hmim.eteam.rest.backend.model.Course;
 import hmim.eteam.rest.backend.model.CourseRole;
 import hmim.eteam.rest.backend.model.Theme;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.ThemeStatusRepository;
 import hmim.eteam.rest.backend.repository.user.CourseRoleRepository;
+import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -23,14 +26,17 @@ public class CourseController {
 
     // Adhook for ::courses.
     private final ThemeStatusRepository themeStatusRepository;
+    private final SiteUserRepository siteUserRepository;
 
     public CourseController(IRoleResolver roleResolver, CourseRepository courseRepository,
                             CourseRoleRepository courseRoleRepository,
-                            ThemeStatusRepository themeStatusRepository) {
+                            ThemeStatusRepository themeStatusRepository,
+                            SiteUserRepository siteUserRepository) {
         this.roleResolver = roleResolver;
         this.courseRepository = courseRepository;
         this.courseRoleRepository = courseRoleRepository;
         this.themeStatusRepository = themeStatusRepository;
+        this.siteUserRepository = siteUserRepository;
     }
 
     public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull Long courseId) {
@@ -96,6 +102,46 @@ public class CourseController {
             courseRepository.save(new hmim.eteam.rest.backend.entity.course.Course(
                     course.getPriority(),
                     course.getName()));
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public ResponseEntity<Void> assignRolePost(String token, @NotNull AssignRole data) {
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(token, data.getCourseId());
+        if (role == UserRole.Admin) {
+            Optional<hmim.eteam.rest.backend.entity.course.Course> course =
+                    courseRepository.findById(data.getCourseId());
+
+            if (!course.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<SiteUser> siteUser = siteUserRepository.findById(data.getCourseId());
+            if (!siteUser.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<hmim.eteam.rest.backend.entity.user.CourseRole> courseRole =
+                    courseRoleRepository.findTopBySiteUserAndCourse(siteUser.get(), course.get());
+
+            if (!courseRole.isPresent()) {
+                courseRoleRepository.save(new hmim.eteam.rest.backend.entity.user.CourseRole(
+                        siteUser.get(),
+                        course.get(),
+                        UserRole.valueOf(data.getRole())));
+
+            } else {
+                courseRole.get().setRole(UserRole.valueOf(data.getRole()));
+                courseRoleRepository.save(courseRole.get());
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
 
         } else {

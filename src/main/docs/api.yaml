@@ -560,7 +560,7 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/AnswerSave'
+          $ref: '#/components/requestBodies/TestSave'
       responses:
         "200":
           description: OK

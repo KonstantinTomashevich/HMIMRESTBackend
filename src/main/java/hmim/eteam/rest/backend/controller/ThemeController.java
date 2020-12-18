@@ -174,4 +174,27 @@ public class ThemeController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    public ResponseEntity<Void> testPost(String token, TestSave testSave) {
+        Optional<CourseTheme> theme = themeRepository.findById(testSave.getId());
+        if (!theme.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(token, theme.get().getCourse().getId());
+        if (role == UserRole.Admin) {
+            testRepository.save(new hmim.eteam.rest.backend.entity.test.Test(
+                    testSave.getTest().getPriority(),
+                    theme.get(),
+                    testSave.getTest().getName()));
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
 }

@@ -479,6 +479,91 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CreativeTaskAnswer'
+  /course:
+    post:
+      summary: Save course
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+          $ref: '#/components/requestBodies/CourseSave'
+      responses:
+        "200":
+          description: Successfully saved the course
+  /theme:
+    post:
+      summary: Save theme
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+          $ref: '#/components/requestBodies/ThemeSave'
+      responses:
+        "200":
+          description: Successfully saved the theme
+  /task:
+    post:
+      summary: Save task
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+          $ref: '#/components/requestBodies/TaskSave'
+      responses:
+        "200":
+          description: Successfully saved the task
+  /answer:
+    post:
+      summary: Save answer to the task
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+          $ref: '#/components/requestBodies/AnswerSave'
+      responses:
+        "200":
+          description: OK
+  /test:
+    post:
+      summary: Save test to the theme
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+          $ref: '#/components/requestBodies/AnswerSave'
+      responses:
+        "200":
+          description: OK
 components:
   schemas:
     AuthenticationToken:
@@ -910,7 +995,83 @@ components:
         - id
         - wasSeen
         - participant
+    ThemeSave:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: false
+        theme:
+            $ref: '#/components/schemas/Theme'
+      required:
+        - id
+        - theme
+    TaskSave:
+      type: object
+      properties:
+        id:
+          description: Theme id
+          type: integer
+          format: int64
+          nullable: false
+        task:
+            $ref: '#/components/schemas/CreativeTask'
+      required:
+        - id
+        - task
+    AnswerSave:
+      type: object
+      properties:
+        id:
+          description: Task id
+          type: integer
+          format: int64
+          nullable: false
+        answer:
+            $ref: '#/components/schemas/CreativeTaskAnswer'
+      required:
+        - id
+        - answer
+    TestSave:
+      type: object
+      properties:
+        id:
+          description: Theme id
+          type: integer
+          format: int64
+          nullable: false
+        test:
+            $ref: '#/components/schemas/Test'
+      required:
+        - id
+        - answer
   requestBodies:
+    CourseSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Course'
+    ThemeSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ThemeSave'
+    TaskSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TaskSave'
+    AnswerSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnswerSave'
+    TestSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TestSave'
     UserRegistrationInfo:
       content:
         application/json:

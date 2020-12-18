@@ -59,6 +59,7 @@ public class CourseController {
 
     public ResponseEntity<List<Course>> courses(String token) {
         List<Course> courses = new ArrayList<>();
+
         courseRepository.findAll().forEach(sourceCourse ->
         {
             // Adhook, but ok for now.
@@ -82,5 +83,23 @@ public class CourseController {
         });
 
         return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> coursePost(String token, @NotNull Course course) {
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(token, null);
+        if (role == UserRole.Admin) {
+
+            courseRepository.save(new hmim.eteam.rest.backend.entity.course.Course(
+                    course.getPriority(),
+                    course.getName()));
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }

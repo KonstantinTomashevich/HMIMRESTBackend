@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -273,4 +274,16 @@ public class Router implements DefaultApi {
         return themeController.themeVideos(token, id);
     }
 
+    @ApiOperation(value = "Save course", nickname = "coursePost", tags={  })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully saved the course") })
+    @RequestMapping(value = "/course",
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    @Override
+    public ResponseEntity<Void> coursePost(
+            @ApiParam(value = "Authentication token",required=true) @RequestHeader(value="token") String token,
+            @ApiParam()  @Valid @RequestBody Course course) {
+        return courseController.coursePost(token, course);
+    }
 }

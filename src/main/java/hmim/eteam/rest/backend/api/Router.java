@@ -51,7 +51,9 @@ public class Router implements DefaultApi {
 
         IRoleResolver roleResolver = new RoleResolver(authTokenRepository, courseRepository, courseRoleRepository);
         authController = new AuthController(siteUserRepository, authTokenRepository);
-        courseController = new CourseController(roleResolver, courseRepository, courseRoleRepository);
+
+        courseController = new CourseController(roleResolver, courseRepository,
+                courseRoleRepository, themeStatusRepository);
         userController = new UserController(authTokenRepository);
 
         creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,

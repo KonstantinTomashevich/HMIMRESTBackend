@@ -33,14 +33,11 @@ public class Course extends OrderedEntity {
         return name;
     }
 
-    public hmim.eteam.rest.backend.model.Course toApiRepresentation() {
-        hmim.eteam.rest.backend.model.Course course = new hmim.eteam.rest.backend.model.Course();
-        course.id(getId()).
-                name(name).
-                priority(getPriority());
+    public List<CourseTheme> getCourseThemes() {
+        return courseThemes;
+    }
 
-        courseThemes.forEach(courseTheme -> course.addThemesItem(courseTheme.toApiRepresentation()));
-        forumThemes.forEach(forumTheme -> course.addForumThemesItem(forumTheme.toApiRepresentation()));
-        return course;
+    public List<ForumTheme> getForumThemes() {
+        return forumThemes;
     }
 }

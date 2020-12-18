@@ -33,10 +33,4 @@ public class CourseTheme extends OrderedEntity {
         return name;
     }
 
-    public Theme toApiRepresentation() {
-        return new Theme().
-                id(getId()).
-                name(getName()).
-                priority(getPriority());
-    }
 }

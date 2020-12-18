@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: SelfEducation
-  version: 1.0.5
+  version: 1.0.6
   title: SelfEducation
   termsOfService: 'http://swagger.io/terms/'
   license:
@@ -526,10 +526,15 @@ components:
           type: integer
           format: int64
           nullable: false
+        participantsQuantity:
+          type: integer
+          format: int64
+          nullable: false
       required:
         - id
         - name
         - priority
+        - participantsQuantity
     Course:
       type: object
       properties:
@@ -541,6 +546,10 @@ components:
           type: string
           nullable: false
         priority:
+          type: integer
+          format: int64
+          nullable: false
+        participantsQuantity:
           type: integer
           format: int64
           nullable: false
@@ -558,6 +567,7 @@ components:
         - id
         - name
         - priority
+        - participantsQuantity
         - forumThemes
         - themes
     CourseRole:
@@ -592,6 +602,7 @@ components:
           type: boolean
           nullable: false
       required:
+        - id
         - name
         - isSuperAdmin
     UserInfo:

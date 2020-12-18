@@ -2,7 +2,6 @@ package hmim.eteam.rest.backend.controller;
 
 import hmim.eteam.rest.backend.api.IRoleResolver;
 import hmim.eteam.rest.backend.entity.course.CourseTheme;
-import hmim.eteam.rest.backend.entity.learning.TextMaterial;
 import hmim.eteam.rest.backend.model.CreativeTask;
 import hmim.eteam.rest.backend.model.ImageMaterial;
 import hmim.eteam.rest.backend.model.Test;

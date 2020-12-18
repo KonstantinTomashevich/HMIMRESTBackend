@@ -10,4 +10,5 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface ThemeStatusRepository extends CrudRepository<ThemeStatus, Long> {
     List<ThemeStatus> findByTheme(CourseTheme theme);
+    Long countDistinctByThemeAndSeenTrue(CourseTheme theme);
 }

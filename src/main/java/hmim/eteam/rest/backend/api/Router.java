@@ -65,7 +65,7 @@ public class Router implements DefaultApi {
 
         themeController = new ThemeController(roleResolver, courseThemeRepository, imageMaterialRepository,
                 videoMaterialRepository, testRepository, textMaterialRepository, creativeTaskRepository,
-                themeStatusRepository);
+                themeStatusRepository, courseRepository);
     }
 
     @ApiOperation(value = "Retrieve course roles (admin only)", nickname = "courseRoles", notes = "Retrieve course roles for all participants", response = CourseRole.class, responseContainer = "List", tags = {})
@@ -274,16 +274,29 @@ public class Router implements DefaultApi {
         return themeController.themeVideos(token, id);
     }
 
-    @ApiOperation(value = "Save course", nickname = "coursePost", tags={  })
+    @ApiOperation(value = "Save course", nickname = "coursePost", tags = {})
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully saved the course") })
+            @ApiResponse(code = 200, message = "Successfully saved the course")})
     @RequestMapping(value = "/course",
-            consumes = { "application/json" },
+            consumes = {"application/json"},
             method = RequestMethod.POST)
     @Override
     public ResponseEntity<Void> coursePost(
-            @ApiParam(value = "Authentication token",required=true) @RequestHeader(value="token") String token,
-            @ApiParam()  @Valid @RequestBody Course course) {
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam() @Valid @RequestBody Course course) {
         return courseController.coursePost(token, course);
+    }
+
+    @ApiOperation(value = "Save theme", nickname = "themePost", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully saved the theme")})
+    @RequestMapping(value = "/theme",
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    @Override
+    public ResponseEntity<Void> themePost(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam() @Valid @RequestBody ThemeSave themeSave) {
+        return themeController.themePost(token, themeSave);
     }
 }

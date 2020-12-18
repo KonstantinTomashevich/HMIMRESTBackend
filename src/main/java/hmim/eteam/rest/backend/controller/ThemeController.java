@@ -2,10 +2,9 @@ package hmim.eteam.rest.backend.controller;
 
 import hmim.eteam.rest.backend.api.IRoleResolver;
 import hmim.eteam.rest.backend.entity.course.CourseTheme;
-import hmim.eteam.rest.backend.model.CreativeTask;
-import hmim.eteam.rest.backend.model.ImageMaterial;
-import hmim.eteam.rest.backend.model.Test;
-import hmim.eteam.rest.backend.model.ThemeStatus;
+import hmim.eteam.rest.backend.entity.user.UserRole;
+import hmim.eteam.rest.backend.model.*;
+import hmim.eteam.rest.backend.repository.course.CourseRepository;
 import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
 import hmim.eteam.rest.backend.repository.course.ThemeStatusRepository;
 import hmim.eteam.rest.backend.repository.learning.ImageMaterialRepository;
@@ -31,6 +30,9 @@ public class ThemeController {
     private final CreativeTaskRepository creativeTaskRepository;
     private final ThemeStatusRepository themeStatusRepository;
 
+    // Adhook
+    private final CourseRepository courseRepository;
+
     public ThemeController(IRoleResolver roleResolver,
                            CourseThemeRepository themeRepository,
                            ImageMaterialRepository imageMaterialRepository,
@@ -38,7 +40,8 @@ public class ThemeController {
                            TestRepository testRepository,
                            TextMaterialRepository textMaterialRepository,
                            CreativeTaskRepository creativeTaskRepository,
-                           ThemeStatusRepository themeStatusRepository) {
+                           ThemeStatusRepository themeStatusRepository,
+                           CourseRepository courseRepository) {
         this.roleResolver = roleResolver;
         this.themeRepository = themeRepository;
         this.imageMaterialRepository = imageMaterialRepository;
@@ -47,6 +50,7 @@ public class ThemeController {
         this.testRepository = testRepository;
         this.creativeTaskRepository = creativeTaskRepository;
         this.themeStatusRepository = themeStatusRepository;
+        this.courseRepository = courseRepository;
     }
 
     public ResponseEntity<List<ImageMaterial>> themeImages(@NotNull String token, @NotNull Long themeId) {
@@ -120,5 +124,30 @@ public class ThemeController {
         videoMaterialRepository.findByThemeOrderByPriorityAsc(theme.get()).
                 forEach(video -> videos.add(video.toApiRepresentation()));
         return new ResponseEntity<>(videos, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> themePost(String token, @NotNull ThemeSave themeSave) {
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(token, themeSave.getId());
+        if (role == UserRole.Admin) {
+            Optional<hmim.eteam.rest.backend.entity.course.Course> course =
+                    courseRepository.findById(themeSave.getId());
+
+            if (!course.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            themeRepository.save(new CourseTheme(
+                    themeSave.getTheme().getPriority(),
+                    course.get(),
+                    themeSave.getTheme().getName()));
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 }

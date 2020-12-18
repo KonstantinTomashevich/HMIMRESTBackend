@@ -144,8 +144,32 @@ public class ThemeController {
                     themeSave.getTheme().getPriority(),
                     course.get(),
                     themeSave.getTheme().getName()));
-            return new ResponseEntity<>(HttpStatus.OK);
 
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public ResponseEntity<Void> taskPost(String token, @NotNull TaskSave taskSave) {
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<CourseTheme> theme = themeRepository.findById(taskSave.getId());
+        if (!theme.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        UserRole role = roleResolver.resolve(token, theme.get().getCourse().getId());
+        if (role == UserRole.Admin) {
+            creativeTaskRepository.save(new hmim.eteam.rest.backend.entity.task.CreativeTask(
+                    taskSave.getTask().getPriority(),
+                    theme.get(),
+                    taskSave.getTask().getName(),
+                    taskSave.getTask().getText()));
+
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

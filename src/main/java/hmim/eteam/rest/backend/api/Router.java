@@ -299,4 +299,17 @@ public class Router implements DefaultApi {
             @ApiParam() @Valid @RequestBody ThemeSave themeSave) {
         return themeController.themePost(token, themeSave);
     }
+
+    @ApiOperation(value = "Save task", nickname = "taskPost", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully saved the task")})
+    @RequestMapping(value = "/task",
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    @Override
+    public ResponseEntity<Void> taskPost(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam() @Valid @RequestBody TaskSave taskSave) {
+        return themeController.taskPost(token, taskSave);
+    }
 }

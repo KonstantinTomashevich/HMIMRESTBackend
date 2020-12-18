@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: SelfEducation
-  version: 1.0.6
+  version: 1.0.8
   title: SelfEducation
   termsOfService: 'http://swagger.io/terms/'
   license:
@@ -10,7 +10,7 @@ info:
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.5
+    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.7
   - url: 'https://petstore.swagger.io/v2'
 paths:
   /register:
@@ -298,7 +298,7 @@ paths:
               schema:
                 type: array
                 items:
-                 $ref: '#/components/schemas/TextMaterial'
+                  $ref: '#/components/schemas/TextMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -492,7 +492,7 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/CourseSave'
+        $ref: '#/components/requestBodies/CourseSave'
       responses:
         "200":
           description: Successfully saved the course
@@ -509,7 +509,7 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/ThemeSave'
+        $ref: '#/components/requestBodies/ThemeSave'
       responses:
         "200":
           description: Successfully saved the theme
@@ -526,7 +526,7 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/TaskSave'
+        $ref: '#/components/requestBodies/TaskSave'
       responses:
         "200":
           description: Successfully saved the task
@@ -543,7 +543,7 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/AnswerSave'
+        $ref: '#/components/requestBodies/AnswerSave'
       responses:
         "200":
           description: OK
@@ -560,7 +560,37 @@ paths:
           schema:
             type: string
       requestBody:
-          $ref: '#/components/requestBodies/TestSave'
+        $ref: '#/components/requestBodies/TestSave'
+      responses:
+        "200":
+          description: OK
+  /assign_role:
+    post:
+      summary: Add role to user
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: User id
+                role:
+                  $ref: "#/components/schemas/Role"
+              required:
+                - id
+                - role
       responses:
         "200":
           description: OK
@@ -655,17 +685,19 @@ components:
         - participantsQuantity
         - forumThemes
         - themes
+    Role:
+      type: string
+      nullable: false
+      default: guest
+      enum:
+        - guest
+        - student
+        - admin
     CourseRole:
       type: object
       properties:
         name:
-          type: string
-          nullable: false
-          default: guest
-          enum:
-            - guest
-            - student
-            - admin
+          $ref: "#/components/schemas/Role"
         participantId:
           type: integer
           format: int64
@@ -1003,7 +1035,7 @@ components:
           format: int64
           nullable: false
         theme:
-            $ref: '#/components/schemas/Theme'
+          $ref: '#/components/schemas/Theme'
       required:
         - id
         - theme
@@ -1016,7 +1048,7 @@ components:
           format: int64
           nullable: false
         task:
-            $ref: '#/components/schemas/CreativeTask'
+          $ref: '#/components/schemas/CreativeTask'
       required:
         - id
         - task
@@ -1029,7 +1061,7 @@ components:
           format: int64
           nullable: false
         answer:
-            $ref: '#/components/schemas/CreativeTaskAnswer'
+          $ref: '#/components/schemas/CreativeTaskAnswer'
       required:
         - id
         - answer
@@ -1042,10 +1074,20 @@ components:
           format: int64
           nullable: false
         test:
-            $ref: '#/components/schemas/Test'
+          type: object
+          properties:
+            info:
+              $ref: '#/components/schemas/Test'
+            questions:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestQuestion'
+          required:
+            - info
+            - questions
       required:
         - id
-        - answer
+        - test
   requestBodies:
     CourseSave:
       content:

@@ -1,6 +1,6 @@
 package hmim.eteam.rest.backend.entity.user;
 
-import hmim.eteam.rest.backend.model.CourseRole;
+import hmim.eteam.rest.backend.model.Role;
 
 import java.util.logging.Logger;
 
@@ -9,18 +9,18 @@ public enum UserRole {
     Student,
     Admin;
 
-    public CourseRole.NameEnum toApiRepresentation() {
+    public Role toApiRepresentation() {
         switch (this) {
             case Guest:
-                return CourseRole.NameEnum.GUEST;
+                return Role.GUEST;
             case Student:
-                return CourseRole.NameEnum.STUDENT;
+                return Role.STUDENT;
             case Admin:
-                return CourseRole.NameEnum.ADMIN;
+                return Role.ADMIN;
             default:
                 Logger.getLogger(getClass().getSimpleName(),
                         "Unable to convert enum value " + this + " to api representation!");
-                return CourseRole.NameEnum.GUEST;
+                return Role.GUEST;
         }
     }
 }

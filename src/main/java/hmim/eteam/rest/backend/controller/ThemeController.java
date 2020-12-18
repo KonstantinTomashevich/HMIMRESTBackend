@@ -11,6 +11,7 @@ import hmim.eteam.rest.backend.repository.learning.ImageMaterialRepository;
 import hmim.eteam.rest.backend.repository.learning.TextMaterialRepository;
 import hmim.eteam.rest.backend.repository.learning.VideoMaterialRepository;
 import hmim.eteam.rest.backend.repository.task.CreativeTaskRepository;
+import hmim.eteam.rest.backend.repository.test.TestQuestionRepository;
 import hmim.eteam.rest.backend.repository.test.TestRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ public class ThemeController {
 
     // Adhook
     private final CourseRepository courseRepository;
+    private final TestQuestionRepository testQuestionRepository;
 
     public ThemeController(IRoleResolver roleResolver,
                            CourseThemeRepository themeRepository,
@@ -41,7 +43,8 @@ public class ThemeController {
                            TextMaterialRepository textMaterialRepository,
                            CreativeTaskRepository creativeTaskRepository,
                            ThemeStatusRepository themeStatusRepository,
-                           CourseRepository courseRepository) {
+                           CourseRepository courseRepository,
+                           TestQuestionRepository testQuestionRepository) {
         this.roleResolver = roleResolver;
         this.themeRepository = themeRepository;
         this.imageMaterialRepository = imageMaterialRepository;
@@ -51,6 +54,7 @@ public class ThemeController {
         this.creativeTaskRepository = creativeTaskRepository;
         this.themeStatusRepository = themeStatusRepository;
         this.courseRepository = courseRepository;
+        this.testQuestionRepository = testQuestionRepository;
     }
 
     public ResponseEntity<List<ImageMaterial>> themeImages(@NotNull String token, @NotNull Long themeId) {
@@ -187,10 +191,19 @@ public class ThemeController {
 
         UserRole role = roleResolver.resolve(token, theme.get().getCourse().getId());
         if (role == UserRole.Admin) {
-            testRepository.save(new hmim.eteam.rest.backend.entity.test.Test(
-                    testSave.getTest().getPriority(),
-                    theme.get(),
-                    testSave.getTest().getName()));
+            hmim.eteam.rest.backend.entity.test.Test test = testRepository.save(
+                    new hmim.eteam.rest.backend.entity.test.Test(
+                            testSave.getTest().getInfo().getPriority(),
+                            theme.get(),
+                            testSave.getTest().getInfo().getName()));
+
+            for (TestQuestion question : testSave.getTest().getQuestions()) {
+                testQuestionRepository.save(new hmim.eteam.rest.backend.entity.test.TestQuestion(
+                        question.getPriority(),
+                        test,
+                        question.getText()
+                ));
+            }
 
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

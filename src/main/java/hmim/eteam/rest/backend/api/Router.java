@@ -65,7 +65,7 @@ public class Router implements DefaultApi {
 
         themeController = new ThemeController(roleResolver, courseThemeRepository, imageMaterialRepository,
                 videoMaterialRepository, testRepository, textMaterialRepository, creativeTaskRepository,
-                themeStatusRepository, courseRepository);
+                themeStatusRepository, courseRepository, testQuestionRepository);
     }
 
     @ApiOperation(value = "Retrieve course roles (admin only)", nickname = "courseRoles", notes = "Retrieve course roles for all participants", response = CourseRole.class, responseContainer = "List", tags = {})

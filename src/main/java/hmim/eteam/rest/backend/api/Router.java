@@ -312,4 +312,17 @@ public class Router implements DefaultApi {
             @ApiParam() @Valid @RequestBody TaskSave taskSave) {
         return themeController.taskPost(token, taskSave);
     }
+
+    @ApiOperation(value = "Save answer to the task", nickname = "answerPost", tags = {})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK")})
+    @RequestMapping(value = "/answer",
+            consumes = {"application/json"},
+            method = RequestMethod.POST)
+    public ResponseEntity<Void> answerPost(
+            @ApiParam(value = "Authentication token", required = true) @RequestHeader(value = "token") String token,
+            @ApiParam() @Valid @RequestBody AnswerSave answerSave) {
+        return creativeTaskController.answerPost(token, answerSave);
+
+    }
 }

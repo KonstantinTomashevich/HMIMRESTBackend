@@ -5,6 +5,7 @@ import hmim.eteam.rest.backend.entity.task.CreativeTask;
 import hmim.eteam.rest.backend.entity.user.AuthToken;
 import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.user.UserRole;
+import hmim.eteam.rest.backend.model.AnswerSave;
 import hmim.eteam.rest.backend.model.CreativeTaskAnswer;
 import hmim.eteam.rest.backend.repository.task.CreativeTaskAnswerRepository;
 import hmim.eteam.rest.backend.repository.task.CreativeTaskRepository;
@@ -13,9 +14,10 @@ import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.validation.Valid;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class CreativeTaskController {
@@ -72,5 +74,46 @@ public class CreativeTaskController {
         List<CreativeTaskAnswer> convertedAnswers = new ArrayList<>();
         answers.forEach(answer -> convertedAnswers.add(answer.toApiRepresentation()));
         return new ResponseEntity<>(convertedAnswers, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> answerPost(String token, AnswerSave answerSave) {
+        if (token == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Optional<CreativeTask> task = creativeTaskRepository.findById(answerSave.getId());
+        if (!task.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Optional<AuthToken> authToken = authTokenRepository.resolveToken(token);
+        if (!authToken.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        UserRole role = roleResolver.resolve(authToken, task.get().getTheme().getCourse().getId());
+        if (role == UserRole.Guest ||
+                (!Objects.equals(authToken.get().getUser().getId(), answerSave.getAnswer().getParticipant()) &&
+                        role != UserRole.Admin)) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        } else {
+            Optional<SiteUser> student = siteUserRepository.findById(answerSave.getAnswer().getParticipant());
+            if (!student.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            if (roleResolver.resolve(student.get(), task.get().getTheme().getCourse().getId()) != UserRole.Student) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            creativeTaskAnswerRepository.save(new hmim.eteam.rest.backend.entity.task.CreativeTaskAnswer(
+                    task.get(),
+                    student.get(),
+                    answerSave.getAnswer().getText(),
+                    Date.from(answerSave.getAnswer().getDate().toInstant())));
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }

@@ -84,8 +84,8 @@ public class CourseController {
             courseThemeRepository.findByCourseOrderByPriorityAsc(sourceCourse).forEach(courseTheme -> course.addThemesItem(new Theme().
                     id(courseTheme.getId()).
                     name(courseTheme.getName()).
-                    priority(courseTheme.getPriority()))
-                    .participantsQuantity(themeStatusRepository.countDistinctByThemeAndSeenTrue(courseTheme)));
+                    priority(courseTheme.getPriority()).
+                    participantsQuantity(themeStatusRepository.countDistinctByThemeAndSeenTrue(courseTheme))));
 
             sourceCourse.getForumThemes().forEach(
                     forumTheme -> course.addForumThemesItem(forumTheme.toApiRepresentation()));

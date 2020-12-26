@@ -8,6 +8,7 @@ import hmim.eteam.rest.backend.model.Course;
 import hmim.eteam.rest.backend.model.CourseRole;
 import hmim.eteam.rest.backend.model.Theme;
 import hmim.eteam.rest.backend.repository.course.CourseRepository;
+import hmim.eteam.rest.backend.repository.course.CourseThemeRepository;
 import hmim.eteam.rest.backend.repository.course.ThemeStatusRepository;
 import hmim.eteam.rest.backend.repository.user.CourseRoleRepository;
 import hmim.eteam.rest.backend.repository.user.SiteUserRepository;
@@ -26,17 +27,20 @@ public class CourseController {
 
     // Adhook for ::courses.
     private final ThemeStatusRepository themeStatusRepository;
+    private final CourseThemeRepository courseThemeRepository;
     private final SiteUserRepository siteUserRepository;
 
     public CourseController(IRoleResolver roleResolver, CourseRepository courseRepository,
                             CourseRoleRepository courseRoleRepository,
                             ThemeStatusRepository themeStatusRepository,
-                            SiteUserRepository siteUserRepository) {
+                            SiteUserRepository siteUserRepository,
+                            CourseThemeRepository courseThemeRepository) {
         this.roleResolver = roleResolver;
         this.courseRepository = courseRepository;
         this.courseRoleRepository = courseRoleRepository;
         this.themeStatusRepository = themeStatusRepository;
         this.siteUserRepository = siteUserRepository;
+        this.courseThemeRepository = courseThemeRepository;
     }
 
     public ResponseEntity<List<CourseRole>> courseRoles(String token, @NotNull Long courseId) {
@@ -77,7 +81,7 @@ public class CourseController {
                             courseRoleRepository.countDistinctByCourseAndRole(sourceCourse, UserRole.Student) +
                                     courseRoleRepository.countDistinctByCourseAndRole(sourceCourse, UserRole.Admin));
 
-            sourceCourse.getCourseThemes().forEach(courseTheme -> course.addThemesItem(new Theme().
+            courseThemeRepository.findByCourseOrderByPriorityAsc(sourceCourse).forEach(courseTheme -> course.addThemesItem(new Theme().
                     id(courseTheme.getId()).
                     name(courseTheme.getName()).
                     priority(courseTheme.getPriority()))

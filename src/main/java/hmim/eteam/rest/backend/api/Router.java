@@ -53,7 +53,7 @@ public class Router implements DefaultApi {
         authController = new AuthController(siteUserRepository, authTokenRepository);
 
         courseController = new CourseController(roleResolver, courseRepository,
-                courseRoleRepository, themeStatusRepository, siteUserRepository);
+                courseRoleRepository, themeStatusRepository, siteUserRepository, courseThemeRepository);
         userController = new UserController(authTokenRepository);
 
         creativeTaskController = new CreativeTaskController(roleResolver, creativeTaskRepository,

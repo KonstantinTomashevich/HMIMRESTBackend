@@ -43,7 +43,7 @@ public class MessageRepositoryTests {
         SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
         siteUserRepository.save(user);
 
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
@@ -64,7 +64,7 @@ public class MessageRepositoryTests {
         SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
         siteUserRepository.save(user);
 
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
@@ -100,7 +100,7 @@ public class MessageRepositoryTests {
         SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
         siteUserRepository.save(user);
 
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());
@@ -127,7 +127,7 @@ public class MessageRepositoryTests {
         SiteUser user = new SiteUser("Name", "longHash", "passwordHash", false);
         siteUserRepository.save(user);
 
-        Course course = new Course("HelloWorld");
+        Course course = new Course(0, "HelloWorld");
         courseRepository.save(course);
 
         ForumTheme theme = new ForumTheme(course, "HelloWorld", new Date());

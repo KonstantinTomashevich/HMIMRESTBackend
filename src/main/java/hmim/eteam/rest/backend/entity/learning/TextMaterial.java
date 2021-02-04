@@ -22,4 +22,12 @@ public class TextMaterial extends CourseThemeEntry {
     public String getText() {
         return text;
     }
+
+    public hmim.eteam.rest.backend.model.TextMaterial toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.TextMaterial().
+                id(getId()).
+                name(getName()).
+                priority(getPriority()).
+                text(text);
+    }
 }

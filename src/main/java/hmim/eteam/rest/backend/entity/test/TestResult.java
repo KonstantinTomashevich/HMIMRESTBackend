@@ -6,6 +6,7 @@ import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 @Entity
@@ -19,14 +20,14 @@ public class TestResult extends IdentifiedEntity {
     private SiteUser siteUser;
 
     @NotNull
-    private Integer score;
+    private Long score;
 
     private Date finishDate;
 
     public TestResult() {
     }
 
-    public TestResult(Test test, SiteUser siteUser, int score, Date finishDate) {
+    public TestResult(Test test, SiteUser siteUser, long score, Date finishDate) {
         this.test = test;
         this.siteUser = siteUser;
         this.score = score;
@@ -41,11 +42,20 @@ public class TestResult extends IdentifiedEntity {
         return siteUser;
     }
 
-    public int getScore() {
+    public long getScore() {
         return score;
     }
 
     public Date getFinishDate() {
         return finishDate;
+    }
+
+    public hmim.eteam.rest.backend.model.TestResult toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.TestResult().
+                id(getId()).
+                finishDate(finishDate.toInstant().atOffset(ZoneOffset.UTC)).
+                score(score).
+                participant(siteUser.getId()).
+                test(test.getId());
     }
 }

@@ -37,7 +37,7 @@ public class TextMaterialRepositoryTests {
     public void findByThemeExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -57,7 +57,7 @@ public class TextMaterialRepositoryTests {
     public void findByThemeNotExists(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
@@ -79,13 +79,13 @@ public class TextMaterialRepositoryTests {
     public void findSeveralByTheme(){
         clearDatabase();
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseTheme firstCourseTheme = new CourseTheme(1, firstCourse, "CourseTheme");
         courseThemeRepository.save(firstCourseTheme);
 
-        List<TextMaterial> textMaterials = new ArrayList<TextMaterial>();
+        List<TextMaterial> textMaterials = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             textMaterials.add(new TextMaterial(9-i, firstCourseTheme, "Name", "Text"));
             textMaterialRepository.save(textMaterials.get(textMaterials.size()-1));

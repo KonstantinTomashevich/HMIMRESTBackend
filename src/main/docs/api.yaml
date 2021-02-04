@@ -1,20 +1,17 @@
----
 openapi: 3.0.0
 info:
-  title: SelfEducation
   description: SelfEducation
-  termsOfService: http://swagger.io/terms/
+  version: 1.0.9
+  title: SelfEducation
+  termsOfService: 'http://swagger.io/terms/'
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
-externalDocs:
-  description: Find out more about SelfEducation at selfeducation.org
-  url: selfeducation.org
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-- url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.0
-  description: SwaggerHub API Auto Mocking
-- url: https://petstore.swagger.io/v2
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/desoluy/SelfEducation/1.0.8
+  - url: 'https://petstore.swagger.io/v2'
 paths:
   /register:
     post:
@@ -37,14 +34,14 @@ paths:
       summary: Retrieve self information
       operationId: me
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully retrieved information about self
@@ -76,14 +73,14 @@ paths:
       description: Retrieve information about courses without fetching materials
       operationId: courses
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successfully retrieved courses
@@ -101,29 +98,32 @@ paths:
       description: Retrieve course roles for all participants
       operationId: courseRoles
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: query
-        description: Course id
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Course id
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved course roles
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CourseRole'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CourseRole'
         "400":
           description: Invalid course id was provided
         "404":
@@ -133,29 +133,32 @@ paths:
       summary: Retrieve images for theme
       operationId: themeImages
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved images for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ImageMaterial'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImageMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -165,29 +168,32 @@ paths:
       summary: Retrieve videos for theme
       operationId: themeVideos
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved videos for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VideoMaterial'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -197,29 +203,32 @@ paths:
       summary: Retrieve tasks for theme
       operationId: themeTasks
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved tasks for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreativeTask'
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreativeTask'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -229,29 +238,32 @@ paths:
       summary: Retrieve tests for theme
       operationId: themeTests
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved tests for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Test'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Test'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -261,29 +273,32 @@ paths:
       summary: Retrieve texts for theme
       operationId: themeTexts
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved texts for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TextMaterial'
+                type: array
+                items:
+                  $ref: '#/components/schemas/TextMaterial'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -293,29 +308,32 @@ paths:
       summary: Retrieve statuses for theme (admin only)
       operationId: themeStatuses
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Theme id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Theme id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved statuses for theme
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ThemeStatus'
+                type: array
+                items:
+                  $ref: '#/components/schemas/ThemeStatus'
         "400":
           description: Invalid theme id was provided
         "404":
@@ -325,22 +343,23 @@ paths:
       summary: Retrieve test questions
       operationId: testQuestions
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Test id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Successfully retrieved questions by test id
@@ -350,36 +369,30 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TestQuestion'
-  /test/{id}/answers:
+  /test/results/{resultId}/answers/:
     get:
-      summary: Retrieve answers of the test for specified user
+      summary: Retrieve user answers of the test in specific attempt
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: participant
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: resultId
+          in: path
+          description: Test result id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
-          description: Successfully retrieved answers for specific test for specific user (if nil - return all answers for all users)
+          description: Successfully retrieved answers for specific test attempt.
           content:
             application/json:
               schema:
@@ -390,29 +403,33 @@ paths:
     get:
       summary: Retrieve answers of the test for specified user
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Test id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: participant
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Test id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: participant
+          in: query
+          description: Participant id
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int64
+            nullable: false
       responses:
         "200":
           description: Successfully retrieved result(s) for specific test for specific user (if nil - return all results for all users)
@@ -426,38 +443,144 @@ paths:
     get:
       summary: Retrieve answers of the task for specified user
       parameters:
-      - name: token
-        in: header
-        description: Authentication token
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: Task id
-        required: true
-        style: simple
-        explode: true
-        schema:
-          type: string
-      - name: participant
-        in: query
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Task id
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: integer
+            format: int64
+        - name: participant
+          in: query
+          description: Participant id
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: integer
+            format: int64
+            nullable: false
       responses:
         "200":
-          description: Successfully retrieved result(s) for specific test for specific user (if nil - return all answers for all users)
+          description: Successfully retrieved answer(s) for specific task for specific user (if nil - return all answers for all users)
           content:
             application/json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/CreativeTaskAnswer'
+  /course:
+    post:
+      summary: Save course
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/CourseSave'
+      responses:
+        "200":
+          description: Successfully saved the course
+  /theme:
+    post:
+      summary: Save theme
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ThemeSave'
+      responses:
+        "200":
+          description: Successfully saved the theme
+  /task:
+    post:
+      summary: Save task
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/TaskSave'
+      responses:
+        "200":
+          description: Successfully saved the task
+  /answer:
+    post:
+      summary: Save answer to the task
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AnswerSave'
+      responses:
+        "200":
+          description: OK
+  /test:
+    post:
+      summary: Save test to the theme
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/TestSave'
+      responses:
+        "200":
+          description: OK
+  /assign_role:
+    post:
+      summary: Add role to user
+      parameters:
+        - name: token
+          in: header
+          description: Authentication token
+          required: true
+          style: simple
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AssignRole'
+      responses:
+        "200":
+          description: OK
 components:
   schemas:
     AuthenticationToken:
@@ -468,45 +591,69 @@ components:
           nullable: false
         finishDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: false
+      required:
+        - value
+        - finishDate
     ForumTheme:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         lastUpdateDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
+          nullable: false
         name:
           type: string
           nullable: false
+      required:
+        - id
+        - lastUpdateDate
+        - name
     Theme:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
+        participantsQuantity:
+          type: integer
+          format: int64
+          nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - participantsQuantity
     Course:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
+          nullable: false
+        participantsQuantity:
+          type: integer
+          format: int64
           nullable: false
         forumThemes:
           type: array
@@ -518,35 +665,50 @@ components:
           nullable: false
           items:
             $ref: '#/components/schemas/Theme'
+      required:
+        - id
+        - name
+        - priority
+        - participantsQuantity
+        - forumThemes
+        - themes
+    Role:
+      type: string
+      nullable: false
+      default: guest
+      enum:
+        - guest
+        - student
+        - admin
     CourseRole:
       type: object
       properties:
-        id:
-          type: string
-          nullable: false
         name:
-          type: string
-          nullable: false
-          default: guest
-          enum:
-          - guest
-          - student
-          - admin
+          $ref: "#/components/schemas/Role"
         participantId:
-          type: string
+          type: integer
+          format: int64
           nullable: false
+      required:
+        - name
+        - participantId
     SelfInfo:
       type: object
       properties:
-        name:
-          type: string
+        id:
+          type: integer
+          format: int64
           nullable: false
-        login:
+        name:
           type: string
           nullable: false
         isSuperAdmin:
           type: boolean
           nullable: false
+      required:
+        - id
+        - name
+        - isSuperAdmin
     UserInfo:
       type: object
       properties:
@@ -556,6 +718,9 @@ components:
         login:
           type: string
           nullable: false
+      required:
+        - name
+        - login
     UserRegistrationInfo:
       type: object
       properties:
@@ -568,6 +733,10 @@ components:
         password:
           type: string
           nullable: false
+      required:
+        - name
+        - login
+        - password
     UserLoginInfo:
       type: object
       properties:
@@ -577,77 +746,113 @@ components:
         password:
           type: string
           nullable: false
+      required:
+        - login
+        - password
     ImageMaterial:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         url:
           type: string
           nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - url
     VideoMaterial:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         url:
           type: string
           nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - url
     CreativeTask:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         text:
           type: string
+          nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - text
     CreativeTaskAnswer:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         text:
           type: string
           nullable: true
         participant:
-          type: string
+          type: integer
+          format: int64
           description: Participant id
           nullable: false
         task:
-          type: string
+          type: integer
+          format: int64
           description: Task id
+          nullable: false
+        date:
+          type: string
+          format: date-time
           nullable: false
         evaluations:
           type: array
           nullable: false
           items:
             $ref: '#/components/schemas/TeacherEvaluation'
+      required:
+        - id
+        - participant
+        - task
+        - date
+        - evaluations
     TeacherEvaluation:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         comment:
           type: string
@@ -655,116 +860,261 @@ components:
         value:
           type: integer
           format: int32
+          nullable: false
         answer:
-          type: string
+          type: integer
+          format: int64
           description: Answer id
           nullable: false
         teacher:
-          type: string
+          type: integer
+          format: int64
           description: Teacher id
           nullable: false
+      required:
+        - id
+        - value
+        - answer
+        - teacher
     TestResult:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         finishDate:
           type: string
-          format: HH:MM:SS DD.MM.YYYY
+          format: date-time
           nullable: true
         score:
           minimum: 0
           type: integer
           format: int64
           default: 0
+          nullable: false
         participant:
-          type: string
+          type: integer
+          format: int64
           description: Participant id
           nullable: false
         test:
-          type: string
+          type: integer
+          format: int64
           description: Test id
           nullable: false
-        answers:
-          type: array
-          nullable: false
-          items:
-            $ref: '#/components/schemas/TestAnswer'
+      required:
+        - id
+        - score
+        - participant
+        - test
+        - answers
     Test:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
+          nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
+      required:
+        - id
+        - name
+        - priority
     TestQuestion:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         text:
           type: string
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
+      required:
+        - id
+        - text
+        - priority
     TestAnswer:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
           nullable: false
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         score:
           type: integer
           format: int16
           nullable: false
         participant:
-          type: string
+          type: integer
+          format: int64
           description: Participant id
           nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - score
+        - participant
     TextMaterial:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         name:
           type: string
         priority:
           type: integer
-          format: int32
+          format: int64
           nullable: false
         text:
           type: string
+          nullable: false
+      required:
+        - id
+        - name
+        - priority
+        - text
     ThemeStatus:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          format: int64
           nullable: false
         wasSeen:
-          type: string
+          type: boolean
           nullable: false
         participant:
-          type: string
+          type: integer
+          format: int64
           description: User id
           nullable: false
+      required:
+        - id
+        - wasSeen
+        - participant
+    ThemeSave:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          nullable: false
+        theme:
+          $ref: '#/components/schemas/Theme'
+      required:
+        - id
+        - theme
+    TaskSave:
+      type: object
+      properties:
+        id:
+          description: Theme id
+          type: integer
+          format: int64
+          nullable: false
+        task:
+          $ref: '#/components/schemas/CreativeTask'
+      required:
+        - id
+        - task
+    AnswerSave:
+      type: object
+      properties:
+        id:
+          description: Task id
+          type: integer
+          format: int64
+          nullable: false
+        answer:
+          $ref: '#/components/schemas/CreativeTaskAnswer'
+      required:
+        - id
+        - answer
+    TestSave:
+      type: object
+      properties:
+        id:
+          description: Theme id
+          type: integer
+          format: int64
+          nullable: false
+        test:
+          type: object
+          properties:
+            info:
+              $ref: '#/components/schemas/Test'
+            questions:
+              type: array
+              items:
+                $ref: '#/components/schemas/TestQuestion'
+          required:
+            - info
+            - questions
+      required:
+        - id
+        - test
+    AssignRole:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+        courseId:
+          type: integer
+          format: int64
+        role:
+          $ref: "#/components/schemas/Role"
+      required:
+        - id
+        - role
   requestBodies:
+    CourseSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Course'
+    ThemeSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ThemeSave'
+    TaskSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TaskSave'
+    AnswerSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AnswerSave'
+    TestSave:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TestSave'
     UserRegistrationInfo:
       content:
         application/json:
@@ -782,3 +1132,8 @@ components:
           schema:
             $ref: '#/components/schemas/AuthenticationToken'
       required: true
+    AssignRole:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AssignRole'

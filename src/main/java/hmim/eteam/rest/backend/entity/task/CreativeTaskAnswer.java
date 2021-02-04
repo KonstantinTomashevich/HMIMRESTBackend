@@ -5,8 +5,12 @@ import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class CreativeTaskAnswer extends IdentifiedEntity {
@@ -23,6 +27,9 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
 
     @NotNull
     private Date date;
+
+    @OneToMany
+    private List<CreativeTaskGrade> grades = new ArrayList<>();
 
     public CreativeTaskAnswer() {
     }
@@ -48,5 +55,18 @@ public class CreativeTaskAnswer extends IdentifiedEntity {
 
     public Date getDate() {
         return date;
+    }
+
+    public hmim.eteam.rest.backend.model.CreativeTaskAnswer toApiRepresentation() {
+        hmim.eteam.rest.backend.model.CreativeTaskAnswer answer =
+                new hmim.eteam.rest.backend.model.CreativeTaskAnswer().
+                        id(getId()).
+                        text(getAnswer()).
+                        participant(student.getId()).
+                        task(task.getId()).
+                        date(date.toInstant().atOffset(ZoneOffset.UTC));
+
+        grades.forEach(grade -> answer.addEvaluationsItem(grade.toApiRepresentation()));
+        return answer;
     }
 }

@@ -1,9 +1,12 @@
 package hmim.eteam.rest.backend.entity.user;
 
+import hmim.eteam.rest.backend.model.AuthenticationToken;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Objects;
 
@@ -39,6 +42,12 @@ public class AuthToken {
 
     public Date getExpireDate() {
         return expireDate;
+    }
+
+    public AuthenticationToken toApiRepresentation() {
+        return new AuthenticationToken().
+                value(getId()).
+                finishDate(getExpireDate().toInstant().atOffset(ZoneOffset.UTC));
     }
 
     @Override

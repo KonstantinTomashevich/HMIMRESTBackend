@@ -11,4 +11,5 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface CreativeTaskAnswerRepository extends CrudRepository<CreativeTaskAnswer, Long> {
     List<CreativeTaskAnswer> findByStudentAndTaskOrderByDateAsc(SiteUser siteUser, CreativeTask task);
+    List<CreativeTaskAnswer> findByTaskOrderByDateAsc(CreativeTask task);
 }

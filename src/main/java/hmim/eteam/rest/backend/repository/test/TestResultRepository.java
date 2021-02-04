@@ -11,4 +11,5 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface TestResultRepository extends CrudRepository<TestResult, Long> {
     List<TestResult> findBySiteUserAndTestOrderByFinishDateAsc(SiteUser siteUser, Test test);
+    List<TestResult> findByTestOrderByFinishDateAsc(Test test);
 }

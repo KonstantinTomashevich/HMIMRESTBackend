@@ -39,7 +39,7 @@ public class CourseRoleRepositoryTests {
         SiteUser firstUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(firstUser);
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseRole firstCourseRole = new CourseRole(firstUser, firstCourse, UserRole.Student);
@@ -62,7 +62,7 @@ public class CourseRoleRepositoryTests {
         SiteUser secondUser = new SiteUser("Name", "Login", "Password", false);
         siteUserRepository.save(secondUser);
 
-        Course firstCourse = new Course("CourseName");
+        Course firstCourse = new Course(0, "CourseName");
         courseRepository.save(firstCourse);
 
         CourseRole firstCourseRole = new CourseRole(firstUser, firstCourse, UserRole.Student);

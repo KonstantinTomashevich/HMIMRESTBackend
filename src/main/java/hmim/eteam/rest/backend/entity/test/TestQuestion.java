@@ -31,4 +31,11 @@ public class TestQuestion extends OrderedEntity {
     public String getText() {
         return text;
     }
+
+    public hmim.eteam.rest.backend.model.TestQuestion toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.TestQuestion().
+                id(getId()).
+                text(text).
+                priority(getPriority());
+    }
 }

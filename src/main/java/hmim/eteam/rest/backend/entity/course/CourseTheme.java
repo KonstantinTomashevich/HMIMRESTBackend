@@ -1,6 +1,7 @@
 package hmim.eteam.rest.backend.entity.course;
 
 import hmim.eteam.rest.backend.entity.util.OrderedEntity;
+import hmim.eteam.rest.backend.model.Theme;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -31,4 +32,5 @@ public class CourseTheme extends OrderedEntity {
     public String getName() {
         return name;
     }
+
 }

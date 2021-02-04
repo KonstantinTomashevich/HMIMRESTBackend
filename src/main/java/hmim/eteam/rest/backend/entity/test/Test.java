@@ -13,4 +13,11 @@ public class Test extends CourseThemeEntry {
     public Test(long priority, CourseTheme theme, String name) {
         super(priority, theme, name);
     }
+
+    public hmim.eteam.rest.backend.model.Test toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.Test().
+                id(getId()).
+                name(getName()).
+                priority(getPriority());
+    }
 }

@@ -1,6 +1,5 @@
 package hmim.eteam.rest.backend.entity.test;
 
-import hmim.eteam.rest.backend.entity.user.SiteUser;
 import hmim.eteam.rest.backend.entity.util.IdentifiedEntity;
 
 import javax.persistence.Entity;
@@ -15,18 +14,13 @@ public class TestUserAnswer extends IdentifiedEntity {
 
     @ManyToOne
     @NotNull
-    private SiteUser siteUser;
-
-    @ManyToOne
-    @NotNull
     private TestResult result;
 
     public TestUserAnswer() {
     }
 
-    public TestUserAnswer(TestAnswer answer, SiteUser siteUser, TestResult result) {
+    public TestUserAnswer(TestAnswer answer, TestResult result) {
         this.answer = answer;
-        this.siteUser = siteUser;
         this.result = result;
     }
 
@@ -34,11 +28,16 @@ public class TestUserAnswer extends IdentifiedEntity {
         return answer;
     }
 
-    public SiteUser getUser() {
-        return siteUser;
-    }
-
     public TestResult getResult() {
         return result;
+    }
+
+    public hmim.eteam.rest.backend.model.TestAnswer toApiRepresentation() {
+        return new hmim.eteam.rest.backend.model.TestAnswer().
+                id(getId()).
+                name(answer.getAnswer()).
+                priority(answer.getPriority()).
+                score(answer.getPoints()).
+                participant(result.getUser().getId());
     }
 }
